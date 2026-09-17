@@ -1,1 +1,0 @@
-# Radar-de-Editais-Dhara-IFA-Records
