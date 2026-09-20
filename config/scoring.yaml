@@ -1,0 +1,124 @@
+# config/scoring.yaml — Radar de Editais Dhara / IFA Records
+#
+# Pesos, penalidades, bloqueios e limiares do score de aderência.
+# Referência de negócio: docs/02_CRITERIOS_DE_ELEGIBILIDADE.md e CLAUDE.md
+#
+# Alterações neste arquivo afetam decisões futuras: explicar o impacto e pedir
+# aprovação humana antes de mudar (ver "Convenções do repositório" em CLAUDE.md).
+#
+# O score mede aderência e viabilidade aparente, não probabilidade de aprovação.
+
+versao: 1
+status: proposta_calibravel   # versão inicial aprovada para uso; valores sujeitos a calibração
+
+# Calibração
+# Os pesos, penalidades e limiares desta versão serão revisados após 2 a 4 semanas
+# de rodadas reais. Qualquer ajuste segue a regra de CLAUDE.md: explicar o impacto
+# e obter aprovação humana antes de alterar.
+calibracao:
+  revisar_apos: "2 a 4 semanas de rodadas reais"
+  criterios:
+    - "Quantidade de falsos positivos (oportunidades bem pontuadas que se mostraram inadequadas)"
+    - "Proporção de oportunidades efetivamente elegíveis para Dhara / IFA"
+    - "Aderência do valor ao orçamento necessário"
+    - "Prazo operacional real para preparar a inscrição"
+    - "Qualidade das fontes"
+    - "Oportunidades que chegaram à etapa EM_PREPARACAO"
+  registro: "Documentar a análise e as mudanças propostas em data/reports/ antes de editar este arquivo"
+
+escala:
+  minimo: 0
+  maximo: 100
+  arredondamento: inteiro
+  piso_apos_penalidades: 0
+
+# Pesos máximos por dimensão (soma = 100)
+dimensoes:
+  aderencia_artistica:
+    maximo: 25
+    pergunta: "A chamada aceita música autoral/independente, a estética ou uma linguagem ligada ao projeto?"
+  formato_escopo:
+    maximo: 20
+    pergunta: "Financia ou programa gravação, lançamento, audiovisual, show, circulação, residência, intercâmbio ou entrega viável?"
+  elegibilidade:
+    maximo: 15
+    pergunta: "PF/PJ e demais regras permitem participação confirmada ou altamente provável?"
+  territorio_internacionalizacao:
+    maximo: 15
+    pergunta: "Amplia atuação nacional/internacional ou é operacionalmente acessível?"
+  viabilidade_financeira:
+    maximo: 10
+    pergunta: "Valor, moeda, itens elegíveis e custos cobertos parecem suficientes ou estratégicos?"
+  janela_operacional:
+    maximo: 5
+    pergunta: "O prazo permite reunir documentos, parceiro, orçamento e materiais?"
+  confiabilidade:
+    maximo: 5
+    pergunta: "Há regulamento e fonte oficial com campos críticos confirmados?"
+  valor_estrategico:
+    maximo: 5
+    pergunta: "Há relevância de público, portfólio, rede, visibilidade, praça, parceria ou mercado?"
+
+# Penalidades (pontos subtraídos do total). Valores iniciais aprovados; calibráveis.
+penalidades:
+  status_nao_verificado:
+    pontos: -15
+    descricao: "status_operacional DESCONHECIDA ou sem evidência atual"
+  prazo_insuficiente:
+    pontos: -10
+    descricao: "Prazo operacionalmente curto para a documentação necessária"
+  informacao_critica_ausente:
+    pontos_por_item: -5
+    maximo_acumulado: -15
+    descricao: "Prazo, valor, elegibilidade ou regulamento não localizados"
+  conflito_de_fonte:
+    pontos: -5
+    descricao: "Divergência material entre regulamento, página e/ou plataforma"
+  recurso_insuficiente:
+    pontos: -10
+    descricao: "Valor insuficiente para custos indispensáveis, quando conhecidos"
+  exigencias_internacionais_nao_enderecadas:
+    pontos: -5
+    descricao: "Visto, idioma, anfitrião, viagem, seguro, imposto ou cofinanciamento sem solução"
+  fonte_baixa_qualidade:
+    pontos: -5
+    descricao: "Somente agregador, mídia ou rede social, sem fonte oficial confirmada"
+
+# Bloqueios: forçam a decisão independentemente do score
+bloqueios:
+  encerrado:
+    condicao: "status_validado ENCERRADA"
+    decisao_forcada: DESCARTAR
+  inelegivel_sem_rota:
+    condicao: "Proponente claramente inelegível sem rota plausível de parceria, convite, contratação ou coprodução"
+    decisao_forcada: DESCARTAR
+  incompatibilidade_explicita_de_escopo:
+    condicao: "Escopo explicitamente incompatível com a proposta artística"
+    decisao_forcada: DESCARTAR
+  suspenso:
+    condicao: "status_validado SUSPENSA"
+    decisao_forcada: MONITORAR
+
+# Valores internos padronizados
+decisoes: [APLICAR, AVALIAR_COM_PARCERIA, MONITORAR, DESCARTAR]
+prioridades: [URGENTE, ALTA_PRIORIDADE, REVISAO]
+
+# Limiares de alerta (ver docs/04_PIPELINE_E_STATUS.md)
+limiares:
+  urgente:
+    status_operacional: ABERTA   # inclui PRORROGADA confirmada (ver docs/04)
+    decisoes: [APLICAR, AVALIAR_COM_PARCERIA]
+    prazo_max_dias: 7
+  alta_prioridade:
+    status_operacional: ABERTA
+    score_minimo: 75
+    confidence_minima: 0.70
+  relatorio_diario_prioritarias:
+    score_minimo: 60
+
+# Confiança (confidence_score entre 0 e 1) — orientação, não fórmula
+confianca:
+  observacao: >
+    Reduzir a confiança quando a fonte oficial não for confirmada, houver campos
+    críticos não localizados ou conflito entre fontes. Nunca esconder incerteza
+    dentro do score.
