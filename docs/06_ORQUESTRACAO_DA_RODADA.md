@@ -94,6 +94,8 @@ Na Preparação, a sessão principal também verifica, sem gravar nada, se o Not
 
    Se o Notion estiver inacessível ou a verificação falhar, pular esta etapa, registrar a falha no log de sincronização e informar na consolidação. A rodada não é interrompida.
 
+   Em execução agendada (rotina na nuvem, sem pessoa usuária presente), vale a seção "Modo agendado" de `docs/07_NOTION_OPERACAO.md`, no lugar da apresentação prévia e da aprovação por escrita descritas acima.
+
 ## Fontes sem URL configurada
 
 - Usar primeiro as fontes com URL configurada em `config/sources.yaml`.
