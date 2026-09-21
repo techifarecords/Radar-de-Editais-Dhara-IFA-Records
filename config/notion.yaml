@@ -81,7 +81,6 @@ politica_atualizacao:
     relacoes_somente_acrescimo:
       - "Relatórios"
     corpo_somente_acrescimo:
-      - "Evidências"
       - "Histórico de alterações"
     status_funil_por_gatilho:
       EM_VALIDACAO: "Retificação, errata, anexo ou novo regulamento oficial; ou link oficial registrado sem resposta"
