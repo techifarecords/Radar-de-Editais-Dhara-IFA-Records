@@ -4,7 +4,7 @@ description: Valida fonte oficial, regulamento, status, prazo, elegibilidade, va
 tools: Read, Glob, Grep, WebSearch, WebFetch
 model: sonnet
 permissionMode: plan
-maxTurns: 30
+maxTurns: 50
 ---
 
 # Papel

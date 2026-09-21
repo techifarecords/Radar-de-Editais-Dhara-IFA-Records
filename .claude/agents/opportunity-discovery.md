@@ -4,7 +4,7 @@ description: Pesquisa e descobre editais, chamadas, festivais, residências, sho
 tools: Read, Glob, Grep, WebSearch, WebFetch
 model: sonnet
 permissionMode: plan
-maxTurns: 35
+maxTurns: 60
 ---
 
 # Papel
