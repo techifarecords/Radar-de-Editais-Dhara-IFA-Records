@@ -198,6 +198,7 @@ O Notion é o sistema de registro operacional do radar: pipeline de oportunidade
   - **Estratégica**: Decisão para `APLICAR`, `AVALIAR_COM_PARCERIA` ou `DESCARTAR`; Status do funil para `APLICAR`, `AVALIAR_COM_PARCERIA`, `DESCARTADO`, `EM_PREPARACAO` ou `PRONTO_PARA_INSCRICAO`; qualquer mudança quando o funil estiver em `EM_PREPARACAO` ou `PRONTO_PARA_INSCRICAO`. Exigem prévia completa e aprovação explícita antes de gravar.
   - **Prazo vencido em candidatura em preparação**: com o funil em `EM_PREPARACAO` ou `PRONTO_PARA_INSCRICAO` e o edital encerrado ou o prazo vencido, atualizar de imediato status validado e operacional, prioridade `REVISAO`, revisão humana, última validação e histórico; nunca alterar funil, Decisão, Responsável ou campos de inscrição e resultado; emitir alerta crítico e proposta estratégica por oportunidade.
   - **Exclusivamente humana**: `INSCRITO`, `RESULTADO_AGUARDADO`, `APROVADO`, `NAO_APROVADO`, Responsável, Notas humanas, dados bancários ou fiscais, documentos, declarações, contratos e anexos sensíveis. O radar nunca grava esses itens.
+- **Modo agendado**: em execução por rotina agendada, sem pessoa usuária presente, vale a seção "Modo agendado" de `docs/07_NOTION_OPERACAO.md`, que substitui a apresentação prévia e a aprovação por escrita. Operações factuais são gravadas sem confirmação; propostas estratégicas não alteram Decisão nem Status do funil: ficam em "Decisão proposta" e "Proposta estratégica", com Revisão humana necessária, e a usuária aprova alterando Decisão no próprio Notion. Só opera com `modo_agendado.habilitado: true` em `config/notion.yaml` e, enquanto `alvo: teste`, grava apenas nas databases [TESTE]. Execuções interativas seguem as regras acima.
 - Relatórios no Notion são sempre páginas novas; páginas anteriores não são editadas.
 - Não alterar schema, views ou estrutura das databases durante a operação.
 - Se o Notion estiver inacessível, continuar a rodada e registrar a falha de sincronização no relatório.
@@ -212,6 +213,7 @@ O Notion é o sistema de registro operacional do radar: pipeline de oportunidade
 - Não executar scraping agressivo. Preferir RSS, APIs, páginas públicas, busca e coleta com cadência responsável.
 - Não expor dados sensíveis em logs, relatórios, commits ou issues.
 - Para decisões jurídicas, tributárias, migratórias, fiscais ou contratuais, registrar a necessidade de validação profissional; não oferecer conclusão definitiva sem fonte competente.
+- Em modo agendado, o radar pode fazer commit e push somente de arquivos novos em data/reports/, somente na branch claude/radar-rodadas. Nunca na main, nunca de outros arquivos, nunca merge, nunca force push.
 
 ## Convenções do repositório
 
