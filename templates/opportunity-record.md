@@ -121,6 +121,10 @@ ultima_validacao: null     # AAAA-MM-DD HH:MM (fuso)
 
 - [ ] {{item}}
 
+## Notas
+
+{{Observações humanas.}}
+
 ## Histórico de alterações
 
 Preservar mudanças de prazo, status, regulamento e valor. Não sobrescrever evidências anteriores. No Notion, cada linha nova é acrescentada ao fim da seção "Histórico de alterações" da página, nunca editada.
@@ -128,7 +132,3 @@ Preservar mudanças de prazo, status, regulamento e valor. Não sobrescrever evi
 | Data/hora | Campo | Antes | Depois | Fonte | Trecho |
 |---|---|---|---|---|---|
 | {{AAAA-MM-DD HH:MM}} | {{campo}} | {{valor}} | {{valor}} | {{url}} | {{trecho curto}} |
-
-## Notas
-
-{{Observações humanas.}}
