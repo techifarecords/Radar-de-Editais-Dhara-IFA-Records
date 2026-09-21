@@ -213,6 +213,7 @@ O Notion é o sistema de registro operacional do radar: pipeline de oportunidade
 - Não executar scraping agressivo. Preferir RSS, APIs, páginas públicas, busca e coleta com cadência responsável.
 - Não expor dados sensíveis em logs, relatórios, commits ou issues.
 - Para decisões jurídicas, tributárias, migratórias, fiscais ou contratuais, registrar a necessidade de validação profissional; não oferecer conclusão definitiva sem fonte competente.
+- Em modo agendado, o radar pode fazer commit e push somente de arquivos novos em data/reports/, somente na branch claude/radar-rodadas. Nunca na main, nunca de outros arquivos, nunca merge, nunca force push.
 
 ## Convenções do repositório
 

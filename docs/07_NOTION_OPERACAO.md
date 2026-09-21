@@ -434,7 +434,7 @@ No máximo 10 criações e 20 atualizações de páginas na database de pipeline
 Quando houver mais operações que o limite, a ordem de gravação é esta, e o que não couber forma o excedente:
 
 - **Criações:** por Prazo final crescente; em empate, por Score decrescente; oportunidades sem prazo por último.
-- **Atualizações:** as que mudam status ou prazo antes das demais.
+- **Atualizações:** as que mudam Status validado, Status operacional, Status do funil ou prazo antes das demais.
 
 ### Deduplicação
 
@@ -446,7 +446,7 @@ O log `data/reports/AAAA-MM-DD-sync-notion.md` identifica a execução como agen
 
 ### Persistência dos arquivos
 
-Ao final de cada rodada agendada, a sessão principal faz commit e push dos arquivos novos de `data/reports/` na branch `claude/radar-rodadas`, criando-a se não existir. Nunca na `main` e nunca alterando arquivos fora de `data/reports/`. A página de relatório no Notion é o registro principal da rodada.
+Ao final de cada rodada agendada, a sessão principal faz commit e push dos arquivos novos de `data/reports/` na branch `claude/radar-rodadas`, criando-a se não existir, a partir da `main`. Nunca na `main` e nunca alterando arquivos fora de `data/reports/`. A página de relatório no Notion é o registro principal da rodada.
 
 ## Payloads preparados pelo `edital-reporter`
 
