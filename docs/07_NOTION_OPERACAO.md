@@ -435,7 +435,11 @@ A aprovação humana acontece no próprio Notion, quando a usuária altera Decis
 
 **Recusa.** Se a usuária apagar "Decisão proposta", isso conta como recusa. A rodada seguinte limpa "Proposta estratégica", registra a recusa no Histórico de alterações e não repropõe o mesmo valor, salvo evidência nova, que deve ser citada na nova proposta.
 
-**Alinhamento do Status do funil.** Quando a usuária alterar Decisão, a rodada seguinte alinha o Status do funil ao valor definido por ela — Aplicar → `APLICAR`, Avaliar com parceria → `AVALIAR_COM_PARCERIA`, Monitorar → `MONITORAR`, Descartar → `DESCARTADO` — e registra a mudança no Histórico de alterações. O alinhamento não é feito se o funil estiver em `EM_PREPARACAO`, `PRONTO_PARA_INSCRICAO`, `INSCRITO`, `RESULTADO_AGUARDADO`, `APROVADO` ou `NAO_APROVADO`.
+**Alinhamento do Status do funil.** Quando a usuária alterar Decisão, a rodada seguinte alinha o Status do funil ao valor definido por ela — Aplicar → `APLICAR`, Avaliar com parceria → `AVALIAR_COM_PARCERIA`, Monitorar → `MONITORAR`, Descartar → `DESCARTADO` — e registra a mudança no Histórico de alterações. A alteração de Decisão pela usuária é aprovação explícita; por isso o alinhamento vale também com o funil em `EM_PREPARACAO` ou `PRONTO_PARA_INSCRICAO`. O alinhamento não é feito se o funil estiver em `INSCRITO`, `RESULTADO_AGUARDADO`, `APROVADO` ou `NAO_APROVADO`.
+
+A proteção de `EM_PREPARACAO` e `PRONTO_PARA_INSCRICAO` contra gatilhos factuais continua igual (ver "Bloqueios da atualização factual do funil"): sem alteração de Decisão pela usuária, nenhum gatilho objetivo move o funil nesses estados.
+
+**Contradição remanescente.** Se, depois do alinhamento, restar contradição entre Decisão e Status do funil — por exemplo, com o funil em `INSCRITO`, `RESULTADO_AGUARDADO`, `APROVADO` ou `NAO_APROVADO` —, o radar apenas lembra o caso em "Decisões humanas necessárias", sem nova proposta estratégica e sem gravar no Notion para resolvê-la.
 
 ### Criação
 
