@@ -236,6 +236,7 @@ docs/04_PIPELINE_E_STATUS.md
 docs/05_KIT_DOCUMENTAL.md
 docs/06_ORQUESTRACAO_DA_RODADA.md
 docs/07_NOTION_OPERACAO.md
+docs/08_DADOS_DHARA_IFA.md
 config/sources.yaml
 config/scoring.yaml
 config/notion.yaml
