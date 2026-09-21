@@ -1,0 +1,12 @@
+# Trabalho local do Claude Code
+.claude/worktrees/
+.claude/settings.local.json
+
+# Dados de trabalho não versionados
+data/inbox/*
+!data/inbox/.gitkeep
+
+# Sistema
+Thumbs.db
+desktop.ini
+.DS_Store
