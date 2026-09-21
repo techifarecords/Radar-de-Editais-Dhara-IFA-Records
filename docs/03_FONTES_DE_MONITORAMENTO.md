@@ -41,7 +41,7 @@ Monitorar:
 - Centros culturais brasileiros e instituições culturais estrangeiras.
 - Residências artísticas, festivais, showcases, mercados de música e chamadas de programação.
 - Chamadas que aceitem artistas internacionais, artistas brasileiros, coproduções ou instituição anfitriã.
-- Oportunidades de circulação na Europa e outros territórios, sem limitar a Berlim e Paris.
+- Oportunidades de circulação na Europa e outros territórios, sem priorizar nenhuma cidade ou país específico.
 
 ## Consulta
 
