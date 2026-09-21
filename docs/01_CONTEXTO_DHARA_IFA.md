@@ -23,7 +23,7 @@ A Dhara pode apresentar, conforme o edital:
 
 A artista pode realizar projetos em qualquer região do Brasil e em outros países.
 
-Cidades como São Paulo, Rio de Janeiro, Belo Horizonte, Berlim e Paris podem integrar estratégias de circulação e ativação, mas não são uma limitação territorial. O agente deve pesquisar oportunidades nacionais e internacionais.
+A IFA Sounds, a artista e a equipe são baseadas no Brasil. Cidades como São Paulo, Rio de Janeiro e Belo Horizonte podem integrar estratégias de circulação e ativação, mas não são uma limitação territorial. O agente deve pesquisar oportunidades nacionais e internacionais, sem tomar nenhuma cidade estrangeira como base ou referência.
 
 Nunca descartar automaticamente uma oportunidade por ser de outro estado ou país. Verificar as regras concretas sobre proponente, residência, sede, coprodução, convite, entidade anfitriã e circulação.
 

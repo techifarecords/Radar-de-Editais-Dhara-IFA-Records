@@ -224,7 +224,6 @@ fontes:
     frequencia: semanal
     idiomas: [en, es, fr, de]
     url: null
-    notas: "Não limitar a Berlim e Paris."
 
   - id: instituicoes_culturais_estrangeiras
     nome: Centros culturais brasileiros no exterior e instituições culturais estrangeiras

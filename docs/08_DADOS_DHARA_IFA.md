@@ -18,11 +18,14 @@ societários, credenciais ou dados pessoais sensíveis.
 
 ## Atuação internacional
 
-- Dhara está em circulação pela Europa em 2026, com shows confirmados em Paris e Berlim.
+- Base: IFA Records, Dhara e equipe são baseadas no Brasil. Não há base, sede nem
+  representação no exterior.
+- Em 2026, Dhara e uma sócia da IFA fazem viagem temporária à Europa, com shows de
+  lançamento do álbum. Esses shows não constituem base, parceria formal nem contraparte.
 - Não há contraparte formal (instituição anfitriã, coprodutor ou carta-convite) confirmada
   para 2027.
-- Contatos em Paris e Berlim são rota provável para contraparte na França e na Alemanha.
-  Tratar como hipótese a verificar, não como condição confirmada.
+- O interesse em oportunidades internacionais decorre do público da artista e da
+  facilidade de mobilidade.
 
 ## IFA Sounds / IFA Records
 
