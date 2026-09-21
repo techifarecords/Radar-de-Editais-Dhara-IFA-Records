@@ -1,0 +1,237 @@
+# config/sources.yaml — Radar de Editais Dhara / IFA Records
+#
+# Lista operacional de fontes monitoradas.
+# Referência de negócio: docs/03_FONTES_DE_MONITORAMENTO.md
+#
+# Regras:
+# - Esta lista orienta a descoberta. Ela NÃO prova que uma oportunidade está aberta.
+# - "url: null" significa que a URL ainda não foi verificada. Não inventar URLs.
+# - "dominio" registra um domínio já citado nas regras do repositório, útil para
+#   buscas "site:". Não equivale a URL validada.
+# - Agregadores (autoridade "agregador") servem para descoberta; status, prazo, valor
+#   e elegibilidade devem ser confirmados no regulamento ou na fonte organizadora.
+# - Este arquivo NÃO é editado automaticamente pelo radar. Toda alteração (inclusão,
+#   remoção, URL ou autoridade) exige aprovação humana e fica no histórico do Git.
+#
+# Comportamento na primeira rodada real (e enquanto houver url: null):
+# 1. Usar primeiro as fontes com URL configurada.
+# 2. Para fontes com url: null, buscar a página oficial pelo nome e registrar uma
+#    PROPOSTA de URL, com evidência, na seção "Propostas de atualização de fontes"
+#    do relatório em data/reports/.
+# 3. Não preencher nem alterar este arquivo; a URL só entra aqui após validação humana.
+
+versao: 1
+atualizado_em: null   # preencher com AAAA-MM-DD ao revisar
+
+# Níveis de autoridade, do maior para o menor (ver hierarquia em CLAUDE.md)
+niveis_autoridade:
+  oficial: "Regulamento, página ou plataforma da instituição realizadora"
+  parceiro: "Instituição parceira ou correalizadora identificável"
+  agregador: "Plataforma que reúne chamadas de terceiros (ex.: PROSAS)"
+  midia: "Imprensa, blogs e newsletters"
+  rede_social: "Perfis em redes sociais, inclusive institucionais"
+
+# Uso permitido de cada fonte
+usos:
+  descoberta: "Encontrar candidatas"
+  validacao: "Confirmar status, prazo, valor e elegibilidade"
+
+# Frequências aceitas: diaria | semanal | mensal
+padrao:
+  frequencia: semanal
+  idiomas: [pt]
+  ativo: true
+  status_verificacao: pendente   # pendente | verificada | inacessivel
+
+fontes:
+
+  # ---------------------------------------------------------------
+  # Agregadores e plataformas de descoberta
+  # ---------------------------------------------------------------
+  - id: prosas
+    nome: PROSAS
+    categoria: agregador_brasil
+    abrangencia: nacional
+    autoridade: agregador
+    prioridade_descoberta: alta
+    usos: [descoberta]
+    frequencia: diaria
+    idiomas: [pt]
+    dominio: prosas.com.br   # citado nas consultas do repositório; confirmar URL canônica
+    url: null                # preencher somente após confirmação humana
+    consultas_sugeridas:
+      - "site:prosas.com.br edital música"
+      - "site:prosas.com.br oportunidades cultura música"
+    status_verificacao: pendente
+    notas: >
+      Fonte prioritária de descoberta no Brasil. Registrar a URL da oportunidade
+      como url_descoberta. A página na PROSAS não pode ser a única evidência de
+      status, prazo, valor ou elegibilidade quando houver regulamento ou fonte
+      organizadora disponível.
+
+  # ---------------------------------------------------------------
+  # 1. Públicas no Brasil
+  # ---------------------------------------------------------------
+  - id: minc
+    nome: Ministério da Cultura e entidades vinculadas
+    categoria: publica_federal
+    abrangencia: nacional
+    autoridade: oficial
+    usos: [descoberta, validacao]
+    frequencia: diaria
+    url: null
+    notas: "Inclui programas federais de música, circulação e intercâmbio."
+
+  - id: pnab
+    nome: Política Nacional Aldir Blanc (chamadas federais, estaduais e municipais)
+    categoria: publica_fomento
+    abrangencia: nacional
+    autoridade: oficial
+    usos: [descoberta, validacao]
+    frequencia: diaria
+    url: null
+    notas: "Chamadas são publicadas por cada ente; validar no portal do ente realizador."
+
+  - id: secretarias_estaduais
+    nome: Secretarias estaduais de cultura (26 estados e Distrito Federal)
+    categoria: publica_estadual
+    abrangencia: estadual
+    autoridade: oficial
+    usos: [descoberta, validacao]
+    frequencia: semanal
+    url: null
+    notas: "Desmembrar em uma entrada por UF quando as URLs forem verificadas."
+
+  - id: secretarias_municipais_capitais
+    nome: Secretarias municipais de cultura das capitais
+    categoria: publica_municipal
+    abrangencia: municipal
+    autoridade: oficial
+    usos: [descoberta, validacao]
+    frequencia: semanal
+    url: null
+    notas: "Priorizar capitais e cidades com políticas culturais recorrentes."
+
+  - id: diarios_oficiais
+    nome: Diários oficiais e portais públicos de editais
+    categoria: publica_transparencia
+    abrangencia: nacional
+    autoridade: oficial
+    usos: [validacao]
+    frequencia: semanal
+    url: null
+
+  # ---------------------------------------------------------------
+  # 2. Instituições e fundações
+  # ---------------------------------------------------------------
+  - id: sesc
+    nome: Sesc (unidades nacionais e regionais)
+    categoria: instituicao
+    abrangencia: nacional
+    autoridade: oficial
+    usos: [descoberta, validacao]
+    frequencia: semanal
+    url: null
+    notas: "Cada regional publica chamadas próprias; desmembrar por UF quando verificado."
+
+  - id: sesi
+    nome: SESI, Firjan SESI e equivalentes
+    categoria: instituicao
+    abrangencia: nacional
+    autoridade: oficial
+    usos: [descoberta, validacao]
+    frequencia: semanal
+    url: null
+
+  - id: fundacoes_institutos
+    nome: Fundações, institutos e programas culturais corporativos
+    categoria: instituicao_privada
+    abrangencia: nacional
+    autoridade: oficial
+    usos: [descoberta, validacao]
+    frequencia: mensal
+    url: null
+    notas: "Incluir editais de bancos, empresas e programas de marca."
+
+  - id: centros_culturais
+    nome: Centros culturais e espaços de programação e ocupação
+    categoria: instituicao
+    abrangencia: nacional
+    autoridade: oficial
+    usos: [descoberta, validacao]
+    frequencia: mensal
+    url: null
+
+  # ---------------------------------------------------------------
+  # 3. Música, festivais e mercado
+  # ---------------------------------------------------------------
+  - id: festivais_showcases_brasil
+    nome: Festivais, showcases e mercados de música no Brasil
+    categoria: musica_mercado
+    abrangencia: nacional
+    autoridade: oficial
+    usos: [descoberta, validacao]
+    frequencia: semanal
+    url: null
+
+  - id: redes_musica_independente
+    nome: Redes de música independente e plataformas setoriais
+    categoria: musica_setorial
+    abrangencia: nacional
+    autoridade: parceiro
+    usos: [descoberta]
+    frequencia: semanal
+    url: null
+
+  - id: mulheres_na_musica
+    nome: Programas e redes de mulheres na música
+    categoria: musica_setorial
+    abrangencia: nacional
+    autoridade: parceiro
+    usos: [descoberta]
+    frequencia: mensal
+    url: null
+
+  # ---------------------------------------------------------------
+  # 4. Internacional
+  # ---------------------------------------------------------------
+  - id: mobilidade_artistica
+    nome: Programas de mobilidade e intercâmbio de artistas
+    categoria: internacional_mobilidade
+    abrangencia: internacional
+    autoridade: oficial
+    usos: [descoberta, validacao]
+    frequencia: semanal
+    idiomas: [pt, en, es, fr, de]
+    url: null
+
+  - id: residencias_internacionais
+    nome: Residências artísticas internacionais com foco em música
+    categoria: internacional_residencia
+    abrangencia: internacional
+    autoridade: oficial
+    usos: [descoberta, validacao]
+    frequencia: semanal
+    idiomas: [en, es, fr, de]
+    url: null
+
+  - id: festivais_showcases_internacionais
+    nome: Festivais, showcases e mercados de música internacionais
+    categoria: internacional_mercado
+    abrangencia: internacional
+    autoridade: oficial
+    usos: [descoberta, validacao]
+    frequencia: semanal
+    idiomas: [en, es, fr, de]
+    url: null
+    notas: "Não limitar a Berlim e Paris."
+
+  - id: instituicoes_culturais_estrangeiras
+    nome: Centros culturais brasileiros no exterior e instituições culturais estrangeiras
+    categoria: internacional_instituicao
+    abrangencia: internacional
+    autoridade: oficial
+    usos: [descoberta, validacao]
+    frequencia: mensal
+    idiomas: [pt, en, es, fr, de]
+    url: null

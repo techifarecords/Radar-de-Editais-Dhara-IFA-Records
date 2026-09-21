@@ -1,0 +1,164 @@
+# config/notion.yaml — Radar de Editais Dhara / IFA Records
+#
+# Identificadores do Notion usados pela sessão principal para sincronização.
+# Regras em docs/07_NOTION_OPERACAO.md.
+#
+# - Não são segredos, mas este arquivo só é alterado por pessoa humana ou com
+#   aprovação explícita. Nunca guardar tokens ou credenciais aqui.
+# - Enquanto database_id, data_source_id ou schema_verificado estiverem vazios/false,
+#   nenhuma escrita no Notion é permitida.
+# - Os IDs são obtidos na "Primeira conexão operacional" (docs/07).
+
+versao: 1
+conector: "Notion MCP (https://mcp.notion.com/mcp)"
+
+producao:
+  pipeline:
+    nome: "Pipeline de Editais — IFA Records"
+    database_id: null
+    data_source_id: null
+  relatorios:
+    nome: "Relatórios do Radar — IFA Records"
+    database_id: null
+    data_source_id: null
+  schema_verificado: false
+  verificado_em: null        # AAAA-MM-DD HH:MM (fuso)
+
+teste:
+  pipeline:
+    nome: "[TESTE] Pipeline de Editais — IFA Records"
+    database_id: null
+    data_source_id: null
+  relatorios:
+    nome: "[TESTE] Relatórios do Radar — IFA Records"
+    database_id: null
+    data_source_id: null
+  schema_verificado: false
+
+sincronizacao:
+  habilitada: false          # mudar para true somente após a primeira conexão operacional
+  lote_maximo_inicial: 5
+  decisoes_sincronizaveis: [APLICAR, AVALIAR_COM_PARCERIA, MONITORAR]
+
+# Política de atualização por campo. Detalhes e fluxo de confirmação em docs/07.
+# "automatica" = sem prévia estratégica; toda gravação ainda passa pela permissão
+# da ferramenta, que nunca é pré-aprovada.
+politica_atualizacao:
+
+  automatica_factual:
+    propriedades:
+      - "Prazo final"
+      - "Fuso do prazo"
+      - "Prazo original (texto)"
+      - "Abertura"
+      - "Data da prorrogação"
+      - "Status validado"
+      - "Status operacional"
+      - "Valor máximo"
+      - "Moeda"
+      - "Link oficial"
+      - "Link de inscrição"
+      - "Regulamento"
+      - "Link de descoberta"
+      - "Fonte de descoberta"
+      - "Fonte oficial confirmada"
+      - "Score"
+      - "Confiança"
+      - "Prioridade"
+      - "Revisão humana necessária"
+      - "Motivo principal"
+      - "Maior risco"
+      - "Pendências"
+      - "Próxima ação"
+      - "Última validação"
+    relacoes_somente_acrescimo:
+      - "Relatórios"
+    corpo_somente_acrescimo:
+      - "Evidências"
+      - "Histórico de alterações"
+    status_funil_por_gatilho:
+      EM_VALIDACAO: "Retificação, errata, anexo ou novo regulamento oficial; ou link oficial registrado sem resposta"
+      AGUARDANDO_REVISAO_HUMANA: "Prioridade REVISAO por dado crítico ausente, conflito de fontes, dúvida de elegibilidade ou possível duplicata"
+      ENCERRADO: "status_operacional ENCERRADA com fonte oficial, ou prazo final vencido sem prorrogação oficial"
+      MONITORAR: "status_operacional ANUNCIADA ou SUSPENSA com fonte oficial"
+    decisao_por_gatilho:
+      MONITORAR: "Somente junto com Status do funil MONITORAR, pelo mesmo gatilho"
+
+  estrategica_com_aprovacao:
+    decisao_para: [APLICAR, AVALIAR_COM_PARCERIA, DESCARTAR]
+    status_funil_para: [APLICAR, AVALIAR_COM_PARCERIA, DESCARTADO, EM_PREPARACAO, PRONTO_PARA_INSCRICAO]
+    criacao_com_decisao: [APLICAR, AVALIAR_COM_PARCERIA]
+    outras:
+      - "Troca da Chave de deduplicação"
+      - "Correção de campo fixo após a criação"
+    previa_obrigatoria:
+      - "Nome e link da oportunidade"
+      - "Valor atual e valor proposto"
+      - "Motivo, evidência, data/hora e URL"
+      - "Impacto operacional"
+      - "Trecho a acrescentar no histórico"
+      - "Payload exato do Notion"
+    sem_resposta_ou_ambigua: nao_aprovado
+
+  prazo_vencido_em_preparacao:
+    aplica_quando:
+      funil_atual: [EM_PREPARACAO, PRONTO_PARA_INSCRICAO]
+      gatilho: "status_operacional ENCERRADA com fonte oficial, ou prazo final vencido sem prorrogação oficial"
+    factual_imediato:
+      - "Status validado (com confirmação oficial)"
+      - "Status operacional = ENCERRADA"
+      - "Prioridade = REVISAO"
+      - "Revisão humana necessária = marcada"
+      - "Última validação"
+      - "Evidências e Histórico de alterações (acréscimo no corpo)"
+    nunca_automatico:
+      - "Status do funil"
+      - "Decisão"
+      - "Responsável"
+      - "Campos de inscrição e resultado"
+    alerta: critico
+    proposta_estrategica:
+      opcoes: ["DESCARTADO + DESCARTAR", "Manter o estado atual por motivo excepcional", "Outro encaminhamento definido pela usuária"]
+      conteudo_obrigatorio:
+        - "Prazo original"
+        - "Data/hora da detecção"
+        - "Evidência"
+        - "URL"
+        - "Status atual (funil, decisão, status validado e operacional)"
+        - "Impacto operacional"
+        - "Payload exato"
+      enquanto_sem_resposta: "Mantém funil e decisão atuais, com REVISAO, e repete o alerta na próxima rodada"
+
+  bloqueios_do_funil:
+    # Funil atual nestes estados: radar não altera Status do funil nem Decisão
+    somente_humano_a_partir_de: [INSCRITO, RESULTADO_AGUARDADO, APROVADO, NAO_APROVADO]
+    # Funil atual nestes estados: qualquer mudança de Status do funil ou Decisão vira estratégica
+    estrategica_a_partir_de: [EM_PREPARACAO, PRONTO_PARA_INSCRICAO]
+
+  exclusivamente_humana:
+    status_funil: [INSCRITO, RESULTADO_AGUARDADO, APROVADO, NAO_APROVADO]
+    propriedades: ["Responsável", "Notas humanas"]
+    conteudos_proibidos:
+      - "Dados bancários"
+      - "Dados fiscais"
+      - "Documentos"
+      - "Declarações"
+      - "Contratos"
+      - "Anexos sensíveis"
+
+  fixos_apos_criacao:
+    - "Oportunidade"
+    - "Identificador externo"
+    - "Instituição"
+    - "Tipo"
+    - "Linguagem"
+    - "Modalidade"
+    - "País"
+    - "Estado/região"
+    - "Cidade"
+    - "Abrangência"
+    - "Cobertura"
+
+  relatorios:
+    criar: "Sempre página nova, por último na sincronização"
+    atualizar: nunca

@@ -36,14 +36,14 @@ Descartar, salvo instrução humana contrária:
 
 - Não restringir buscas a São Paulo.
 - Incluir chamadas estaduais, municipais, nacionais e internacionais.
-- Se a chamada exigir residência, sede ou CNPJ local, marcar “AVALIAR COM PARCERIA” se houver possibilidade prática de:
+- Se a chamada exigir residência, sede ou CNPJ local, marcar `AVALIAR_COM_PARCERIA` se houver possibilidade prática de:
   - Coprodução.
   - Parceiro local.
   - Instituição anfitriã.
   - Contratação artística.
   - Convite de festival ou espaço cultural.
   - Projeto de circulação.
-- Marcar “DESCARTAR” apenas se a regra for inequivocamente impeditiva e não houver rota realista de participação.
+- Marcar `DESCARTAR` apenas se a regra for inequivocamente impeditiva e não houver rota realista de participação.
 
 ## Regras de fonte
 
@@ -59,12 +59,16 @@ Se houver divergência, o regulamento oficial mais recente e suas retificações
 
 ## Escala de decisão
 
-- APLICAR: alta aderência, status aberto confirmado e elegibilidade confirmada ou muito provável.
-- AVALIAR COM PARCERIA: alta ou média aderência, mas depende de parceiro, coprodutor, anfitrião, proponente local ou checagem jurídica/documental.
-- MONITORAR: oportunidade anunciada, futura, parcialmente aderente ou ainda com informação essencial ausente.
-- DESCARTAR: encerrada, incompatível, inelegível de modo evidente ou sem viabilidade operacional.
+Valores internos padronizados (usar exatamente esta grafia em registros, agentes e relatórios): `APLICAR`, `AVALIAR_COM_PARCERIA`, `MONITORAR`, `DESCARTAR`.
+
+- `APLICAR`: alta aderência, status aberto confirmado e elegibilidade confirmada ou muito provável.
+- `AVALIAR_COM_PARCERIA`: alta ou média aderência, mas depende de parceiro, coprodutor, anfitrião, proponente local ou checagem jurídica/documental.
+- `MONITORAR`: oportunidade anunciada, futura, parcialmente aderente ou ainda com informação essencial ausente.
+- `DESCARTAR`: encerrada, incompatível, inelegível de modo evidente ou sem viabilidade operacional.
 
 ## Score de aderência: 0 a 100
+
+Os pesos e penalidades operacionais ficam em `config/scoring.yaml`. Os valores abaixo são a referência de negócio; em caso de divergência, pedir revisão humana antes de alterar qualquer um dos dois.
 
 - Até 25 pontos: aderência artística e de linguagem.
 - Até 20 pontos: aderência de formato e escopo financiável.
