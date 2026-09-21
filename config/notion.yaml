@@ -48,7 +48,8 @@ modo_agendado:
 
 # Política de atualização por campo. Detalhes e fluxo de confirmação em docs/07.
 # "automatica" = sem prévia estratégica; toda gravação ainda passa pela permissão
-# da ferramenta, que nunca é pré-aprovada.
+# da ferramenta, que nunca é pré-aprovada, exceto no modo agendado (ver seção
+# própria em docs/07).
 politica_atualizacao:
 
   automatica_factual:

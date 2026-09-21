@@ -187,7 +187,7 @@ Toda escrita no Notion pertence a um de três níveis. A regra completa por camp
 | **Estratégica** | Mudança de rumo da candidatura | Prévia completa por oportunidade e aprovação explícita da pessoa usuária antes de gravar |
 | **Exclusivamente humana** | Estados de inscrição e resultado, responsáveis, notas e dados sensíveis | O radar nunca grava; no máximo lembra em "Decisões humanas necessárias" |
 
-"Automático" neste documento significa **sem a prévia estratégica**. Não significa gravar sem confirmação: as ferramentas `notion-create-pages` e `notion-update-page` nunca são pré-aprovadas, então toda gravação passa pela permissão da ferramenta no Claude Code.
+"Automático" neste documento significa **sem a prévia estratégica**. Não significa gravar sem confirmação: as ferramentas `notion-create-pages` e `notion-update-page` nunca são pré-aprovadas, então toda gravação passa pela permissão da ferramenta no Claude Code, exceto no modo agendado (ver seção própria).
 
 ### Atualização factual
 
@@ -319,6 +319,8 @@ O radar nunca cria duplicatas e nunca apaga páginas.
 | Decisão → `MONITORAR` | Factual | Factual, só junto com o funil para `MONITORAR` |
 | Decisão → `APLICAR`, `AVALIAR_COM_PARCERIA` | Estratégica | Estratégica |
 | Decisão → `DESCARTAR` | Não se cria | Estratégica |
+| Decisão proposta | Nunca na criação interativa; radar somente em modo agendado | Radar em modo agendado; limpeza após aprovação ou recusa |
+| Proposta estratégica | Nunca na criação interativa; radar somente em modo agendado | Radar em modo agendado; limpeza após aprovação ou recusa |
 | Status validado, Status operacional | Radar | Factual |
 | Prioridade, Revisão humana necessária | Radar | Factual |
 | Prazo final, Fuso do prazo, Prazo original (texto) | Radar | Factual |
@@ -411,6 +413,10 @@ A aprovação humana acontece no próprio Notion, quando a usuária altera Decis
 - limpa "Decisão proposta" e "Proposta estratégica" da proposta atendida;
 - registra no Histórico de alterações o valor definido pela usuária e a limpeza da proposta, com data/hora.
 
+**Recusa.** Se a usuária apagar "Decisão proposta", isso conta como recusa. A rodada seguinte limpa "Proposta estratégica", registra a recusa no Histórico de alterações e não repropõe o mesmo valor, salvo evidência nova, que deve ser citada na nova proposta.
+
+**Alinhamento do Status do funil.** Quando a usuária alterar Decisão, a rodada seguinte alinha o Status do funil ao valor definido por ela — Aplicar → `APLICAR`, Avaliar com parceria → `AVALIAR_COM_PARCERIA`, Monitorar → `MONITORAR`, Descartar → `DESCARTADO` — e registra a mudança no Histórico de alterações. O alinhamento não é feito se o funil estiver em `EM_PREPARACAO`, `PRONTO_PARA_INSCRICAO`, `INSCRITO`, `RESULTADO_AGUARDADO`, `APROVADO` ou `NAO_APROVADO`.
+
 ### Criação
 
 - Decisão `MONITORAR`: criação no nível factual, como nas execuções interativas.
@@ -425,6 +431,11 @@ Inalterado. A rotina agendada nunca grava os itens de "Campos exclusivamente hum
 
 No máximo 10 criações e 20 atualizações de páginas na database de pipeline por rodada (`modo_agendado.limite_criacoes_por_rodada` e `modo_agendado.limite_atualizacoes_por_rodada`). O excedente não é gravado: vai para o relatório local, na seção "Sincronização com o Notion", como operações pendentes, e é reconsiderado na rodada seguinte. A página da database de Relatórios não entra nesses limites.
 
+Quando houver mais operações que o limite, a ordem de gravação é esta, e o que não couber forma o excedente:
+
+- **Criações:** por Prazo final crescente; em empate, por Score decrescente; oportunidades sem prazo por último.
+- **Atualizações:** as que mudam status ou prazo antes das demais.
+
 ### Deduplicação
 
 Antes de gravar, a sessão principal consulta a database de pipeline do Notion do ambiente-alvo pela Chave de deduplicação, pelo Link oficial e pelo par Instituição + Identificador externo, conforme "Chave de deduplicação". Se houver mais de uma página, aquela oportunidade não é gravada e fica em `REVISAO` no relatório.
@@ -432,6 +443,10 @@ Antes de gravar, a sessão principal consulta a database de pipeline do Notion d
 ### Registro
 
 O log `data/reports/AAAA-MM-DD-sync-notion.md` identifica a execução como agendada e registra o alvo (teste ou produção), as operações factuais gravadas, as propostas estratégicas preenchidas, as propostas atendidas e limpas, o excedente não gravado e as falhas.
+
+### Persistência dos arquivos
+
+Ao final de cada rodada agendada, a sessão principal faz commit e push dos arquivos novos de `data/reports/` na branch `claude/radar-rodadas`, criando-a se não existir. Nunca na `main` e nunca alterando arquivos fora de `data/reports/`. A página de relatório no Notion é o registro principal da rodada.
 
 ## Payloads preparados pelo `edital-reporter`
 
