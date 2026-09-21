@@ -15,33 +15,33 @@ conector: "Notion MCP (https://mcp.notion.com/mcp)"
 producao:
   pipeline:
     nome: "Pipeline de Editais — IFA Records"
-    database_id: null
-    data_source_id: null
+    database_id: "37958932-449b-4375-91b1-1476130fa02f"
+    data_source_id: "be0fccbf-ce43-4daa-ba66-0d7d7657ca8c"
   relatorios:
     nome: "Relatórios do Radar — IFA Records"
-    database_id: null
-    data_source_id: null
-  schema_verificado: false
-  verificado_em: null        # AAAA-MM-DD HH:MM (fuso)
+    database_id: "d50929f2-d9f1-439c-8fbf-b67fb7e92c2a"
+    data_source_id: "cc1b9a23-1e56-47bd-8d20-a68a3e96209c"
+  schema_verificado: true
+  verificado_em: "2026-09-21 15:00 (America/Sao_Paulo)"   # AAAA-MM-DD HH:MM (fuso)
 
 teste:
   pipeline:
     nome: "[TESTE] Pipeline de Editais — IFA Records"
-    database_id: null
-    data_source_id: null
+    database_id: "e07c19e1-32b7-4219-8e7a-d9b160833465"
+    data_source_id: "f11c7be3-a9a4-4733-8b28-25df5a90f3a3"
   relatorios:
     nome: "[TESTE] Relatórios do Radar — IFA Records"
-    database_id: null
-    data_source_id: null
-  schema_verificado: false
+    database_id: "cc7fbdb7-3b09-4524-9c3e-c98548873e98"
+    data_source_id: "ab99f222-9113-4df1-91ed-f8be9719e0e0"
+  schema_verificado: true
 
 sincronizacao:
-  habilitada: false          # mudar para true somente após a primeira conexão operacional
+  habilitada: true           # mudar para true somente após a primeira conexão operacional
   lote_maximo_inicial: 5
   decisoes_sincronizaveis: [APLICAR, AVALIAR_COM_PARCERIA, MONITORAR]
 
 modo_agendado:
-  habilitado: false
+  habilitado: true
   alvo: teste          # teste | producao
   limite_criacoes_por_rodada: 10
   limite_atualizacoes_por_rodada: 20
@@ -81,7 +81,6 @@ politica_atualizacao:
     relacoes_somente_acrescimo:
       - "Relatórios"
     corpo_somente_acrescimo:
-      - "Evidências"
       - "Histórico de alterações"
     status_funil_por_gatilho:
       EM_VALIDACAO: "Retificação, errata, anexo ou novo regulamento oficial; ou link oficial registrado sem resposta"

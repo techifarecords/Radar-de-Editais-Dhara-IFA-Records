@@ -116,12 +116,29 @@ Evite propriedades chamadas "ID" ou "URL": o conector exige tratamento especial 
 ```markdown
 ## Resumo
 ## Evidências
-## Histórico de alterações
 ## Checklist inicial
+## Histórico de alterações
 ```
 
-- **Evidências**: tabela com afirmação, trecho curto da fonte, URL e data/hora da coleta, gravada na criação.
-- **Histórico de alterações**: somente acréscimos, com `insert_content` no fim da página. Cada entrada registra data/hora, campo, valor anterior, valor novo, fonte (URL) e trecho. Entradas anteriores nunca são editadas ou removidas.
+- **Evidências**: tabela com afirmação, trecho curto da fonte, URL e data/hora da coleta, gravada na criação. É a foto das evidências no momento da criação e não recebe entradas novas depois; evidências posteriores ficam só no Histórico de alterações, que registra fonte, URL, trecho e data/hora.
+- **Histórico de alterações**: sempre a última seção da página, para que o `insert_content` no fim da página caia dentro dela. Somente acréscimos, com `insert_content` no fim da página. Entradas anteriores nunca são editadas ou removidas.
+
+#### Padrão de entrada do Histórico de alterações
+
+- Uma entrada por evento: criação, atualização factual, mudança estratégica aprovada, encerramento, preparação de teste etc.
+- A linha principal registra data/hora com fuso, descrição do evento, fonte (URL) e trecho.
+- Cada propriedade alterada entra como subitem, no formato `campo: antes → depois`.
+- "Última validação" não gera entrada própria; aparece como subitem quando a entrada registrar outras mudanças.
+- Acréscimo de vínculo na relação Relatórios ↔ Oportunidades não gera entrada.
+
+Exemplo:
+
+```markdown
+- 2026-09-21 15:08 — Retificação do prazo. Fonte: https://example.org/edital/retificacao-1. Trecho: "Inscrições até 20/12/2026 às 23h59".
+	- Prazo final: 2026-12-15 23:59 (America/Sao_Paulo) → 2026-12-20 23:59 (America/Sao_Paulo)
+	- Prazo original (texto): "Inscrições até 15/12/2026 às 23h59" → "Inscrições até 20/12/2026 às 23h59"
+	- Última validação: 2026-09-21 15:00 (America/Sao_Paulo) → 2026-09-21 15:08 (America/Sao_Paulo)
+```
 
 ## Database 2: `Relatórios do Radar — IFA Records`
 
@@ -203,11 +220,11 @@ Permitida quando houver evidência validada na rodada:
 - Motivo principal, Maior risco e Pendências.
 - Próxima ação e Última validação.
 - Relação Relatórios (somente acréscimo).
-- Evidências e Histórico de alterações, somente por acréscimo no corpo da página.
+- Histórico de alterações, somente por acréscimo no fim do corpo da página. A seção Evidências não recebe acréscimos depois da criação (ver "Corpo da página").
 - Status do funil para `EM_VALIDACAO`, `AGUARDANDO_REVISAO_HUMANA`, `ENCERRADO` ou `MONITORAR`, somente pelos gatilhos objetivos abaixo.
 - Decisão para `MONITORAR`, somente junto com a mudança do Status do funil para `MONITORAR` pelo mesmo gatilho, para que os dois campos não fiquem contraditórios.
 
-Toda atualização de campo com valor anterior preenchido gera uma entrada no Histórico de alterações, na mesma operação.
+Toda atualização de campo com valor anterior preenchido gera uma entrada no Histórico de alterações, na mesma operação, no padrão descrito em "Corpo da página". Exceções: "Última validação", que só aparece como subitem de uma entrada com outras mudanças, e o acréscimo de vínculo na relação Relatórios.
 
 #### Gatilhos objetivos do Status do funil
 
@@ -215,7 +232,7 @@ Toda atualização de campo com valor anterior preenchido gera uma entrada no Hi
 |---|---|
 | `EM_VALIDACAO` | Fonte oficial publicou retificação, errata, anexo ou novo regulamento que exige revalidação; ou um link oficial registrado deixou de responder |
 | `AGUARDANDO_REVISAO_HUMANA` | A oportunidade recebeu `REVISAO` por dado crítico ausente, conflito de fontes, dúvida de elegibilidade ou possível duplicata |
-| `ENCERRADO` | `status_operacional` = `ENCERRADA` com fonte oficial, ou prazo final vencido sem prorrogação oficial localizada |
+| `ENCERRADO` | `status_operacional` = `ENCERRADA` com fonte oficial confirmada; ou prazo final vencido, somente se a fonte oficial foi consultada depois do prazo e não mostra prorrogação |
 | `MONITORAR` | `status_operacional` = `ANUNCIADA` ou `SUSPENSA` com fonte oficial |
 
 #### Bloqueios da atualização factual do funil
@@ -223,6 +240,8 @@ Toda atualização de campo com valor anterior preenchido gera uma entrada no Hi
 - Se o Status do funil atual for `INSCRITO`, `RESULTADO_AGUARDADO`, `APROVADO` ou `NAO_APROVADO`, o radar não altera Status do funil nem Decisão em nenhuma hipótese.
 - Se o Status do funil atual for `EM_PREPARACAO` ou `PRONTO_PARA_INSCRICAO`, qualquer mudança de Status do funil ou Decisão, inclusive por gatilho objetivo, segue o fluxo estratégico. Essas fases foram aprovadas por pessoa humana e não são desfeitas sem aprovação.
 - Sem gatilho objetivo documentado, a mudança não é factual: vira proposta estratégica ou item de revisão.
+- Encerramento sem fonte oficial confirmada não move o funil: a oportunidade recebe `REVISAO`.
+- Prazo final vencido sem que a fonte oficial tenha sido consultada depois do prazo não move o funil: a oportunidade recebe `REVISAO`. Se a fonte oficial mostrar prorrogação, vale a regra de chamada `PRORROGADA` de `docs/04_PIPELINE_E_STATUS.md`.
 
 ### Prazo vencido em candidatura em preparação
 
@@ -331,8 +350,9 @@ O radar nunca cria duplicatas e nunca apaga páginas.
 | Score, Confiança | Radar | Factual |
 | Motivo principal, Maior risco, Pendências, Próxima ação | Radar | Factual |
 | Última validação | Radar | Factual |
-| Relatórios (relação) | Radar | Factual, somente acréscimo |
-| Corpo: Evidências e Histórico de alterações | Radar | Factual, somente acréscimo com `insert_content` |
+| Relatórios (relação) | Radar | Factual, somente acréscimo; sem entrada no Histórico de alterações |
+| Corpo: Evidências | Radar | Nunca alterada; evidências posteriores vão para o Histórico de alterações |
+| Corpo: Histórico de alterações | Radar | Factual, somente acréscimo com `insert_content` no fim da página |
 | Responsável | Nunca | Exclusivamente humano |
 | Notas humanas | Nunca | Exclusivamente humano |
 | Anexos, dados bancários ou fiscais, documentos, declarações, contratos | Nunca | Exclusivamente humano |
@@ -491,10 +511,10 @@ Executar uma única vez, em uma branch de teste, antes da primeira sincronizaç�
     - Simular uma mudança de Decisão de "Monitorar" para "Aplicar": deve gerar a prévia estratégica com os seis itens e só gravar após aprovação.
     - Simular a mesma mudança e responder "adiar": nada deve ser gravado e a proposta deve aparecer no log.
     - Simular `status_operacional` = `ENCERRADA` com fonte oficial: o funil deve ir para "Encerrado" pelo nível factual.
-    - Colocar a página de teste em "Em preparação" manualmente e repetir a simulação anterior: os campos factuais (status validado e operacional, prioridade, revisão, última validação e histórico) devem ser atualizados, o funil e a Decisão devem permanecer, e deve sair um alerta crítico com proposta estratégica.
+    - Colocar a página de teste em "Em preparação" manualmente e repetir a simulação anterior: os campos factuais (status validado e operacional, prioridade, revisão, última validação e histórico) devem ser atualizados, o funil e a Decisão devem permanecer, e deve sair um alerta crítico com proposta estratégica. Se a edição manual não chegar ao Notion, a sessão pode fazer essa preparação pela API, com aprovação da usuária, registrando no Histórico de alterações que é preparação de teste e não comportamento do radar.
 11. **Testar relatório.** Criar uma página na database de relatórios de teste, com relação para a oportunidade de teste. Tentar criar outra com a mesma chave: deve ser proposta com sufixo `-r2`, sem alterar a primeira.
 12. **Testar falha.** Rodar uma sincronização em modo simulado com um `data_source_id` inválido: a rodada deve terminar, o relatório local deve registrar a falha e nada deve ser gravado.
-13. **Encerrar os testes.** O radar não apaga páginas. Arquivar ou apagar as databases de teste é uma ação manual da pessoa usuária.
+13. **Encerrar os testes.** O radar não apaga páginas. As databases [TESTE] ficam ativas enquanto `modo_agendado.alvo` for `teste` (modo sombra). Arquivá-las ou apagá-las é uma ação manual da pessoa usuária, e só depois da troca para `producao`.
 14. **Primeira sincronização real.** Lote pequeno (até cinco oportunidades), com revisão item a item.
 
 ## DDL de referência
