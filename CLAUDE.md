@@ -226,6 +226,7 @@ O Notion é o sistema de registro operacional do radar: pipeline de oportunidade
 - Fazer mudanças pequenas, reversíveis e bem delimitadas.
 - Antes de editar múltiplos arquivos ou executar tarefa extensa, apresentar plano breve com arquivos envolvidos e critério de sucesso.
 - Após qualquer alteração, validar links internos, formatação e coerência com este arquivo.
+- Nunca fazer commit direto na main. Toda mudança entra por branch e pull request, com merge feito pela usuária. Exceção única: os commits de data/reports/ na branch claude/radar-rodadas, em modo agendado.
 
 ## Arquivos de referência obrigatória
 
