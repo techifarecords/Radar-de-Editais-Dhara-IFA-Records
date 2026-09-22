@@ -24,7 +24,7 @@ O repositório é a fonte de verdade das regras, agentes, critérios, fontes, te
 
 - IFA Sounds LTDA é a razão social e a proponente; IFA Records é a marca comercial em uso.
 - A IFA Sounds possui CNPJ e está no regime do Simples Nacional.
-- Dhara possui contrato com a IFA Sounds.
+- Dhara possui contrato de agenciamento 360 com a IFA Sounds LTDA.
 - Nunca tratar a IFA Sounds como MEI.
 - Nunca inferir limite de faturamento, teto de edital, natureza jurídica, CNAE, tempo de CNPJ, endereço, inscrição estadual/municipal, certidões, conta bancária ou dados fiscais que não estejam explicitamente fornecidos.
 - Inferir dado empresarial não fornecido continua proibido. Porém, dados cadastrais públicos da IFA Sounds LTDA (razão social, nome fantasia, natureza jurídica, porte, CNAE, data de abertura, município/UF, situação cadastral e opção pelo Simples Nacional) podem ser consultados em fonte oficial ou em base de dados abertos da Receita Federal, sempre registrando a fonte e a data da consulta. Permanecem fora, e nunca são registrados: certidões (quando exigirem login ou CAPTCHA), endereço completo, e-mail, telefone, dados de sócios e dados bancários.

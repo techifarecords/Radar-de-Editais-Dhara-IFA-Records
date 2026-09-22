@@ -2,7 +2,7 @@
 
 ## Artista
 
-Dhara Guimarães é cantora, compositora e produtora musical independente brasileira.
+Dhara Guimarães é cantora e compositora independente brasileira.
 
 Seu projeto prioritário é o álbum autoral “Nada disso é só meu”, uma obra de música contemporânea brasileira que articula uma face acústica e intimista com uma face conduzida por beats. A obra investiga relações, memória, cidade, intimidade, vivências individuais transformadas em narrativa coletiva e cultura brasileira contemporânea.
 
@@ -29,7 +29,7 @@ Nunca descartar automaticamente uma oportunidade por ser de outro estado ou paí
 
 ## Produtora e proponente
 
-A artista tem contrato com a IFA Sounds LTDA (razão social e proponente), cuja marca comercial é IFA Records.
+A artista tem contrato de agenciamento 360 com a IFA Sounds LTDA (razão social e proponente), cuja marca comercial é IFA Records.
 
 A IFA Sounds possui CNPJ e está enquadrada no Simples Nacional.
 

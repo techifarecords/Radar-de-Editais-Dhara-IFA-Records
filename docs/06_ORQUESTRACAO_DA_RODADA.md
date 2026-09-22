@@ -18,7 +18,7 @@ Nenhum subagente acessa o Notion. A sessão principal é a única responsável p
 
 ## Contexto fixo
 
-- Artista: Dhara Guimarães, cantora, compositora e produtora musical independente brasileira.
+- Artista: Dhara Guimarães, cantora e compositora independente brasileira.
 - Projeto prioritário: álbum autoral “Nada disso é só meu”, que combina linguagem acústica/intimista e uma face orientada por beats; temas de relações, memória, cidade, intimidade, narrativas coletivas e cultura brasileira contemporânea.
 - Proponente/representante possível: IFA Sounds, nome comercial IFA Records.
 - A IFA Sounds é pessoa jurídica brasileira com CNPJ, enquadrada no Simples Nacional.
