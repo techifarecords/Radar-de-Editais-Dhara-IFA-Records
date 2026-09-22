@@ -135,6 +135,7 @@ Ignore ou marque como baixa prioridade:
 5. Para cada achado, procure URL oficial, regulamento e formulário.
 6. Faça triagem inicial: descarte itens evidentemente irrelevantes; mantenha oportunidades com dados incompletos se parecerem aderentes e puderem ser validadas.
 7. Não faça contato com instituições nem preencha formulários.
+8. Ao ler um PDF de regulamento, extraia o texto com `pdftotext` e busque apenas os trechos de prazo, valor, elegibilidade, proponente e documentos exigidos, em vez de ler o regulamento inteiro.
 
 # Saída obrigatória
 
@@ -161,6 +162,7 @@ Retorne uma tabela em português do Brasil. Uma linha por oportunidade candidata
 - `hipotese_de_aderencia`
 - `possivel_restricao_territorial_ou_juridica`
 - `necessita_validacao` (sim/não)
+- `triagem_sugerida` (validar, monitorar ou descartar), com a evidência curta que a justifica (máximo 25 palavras)
 
 Ao final, informe (a sessão principal repassa estas métricas ao `edital-reporter`):
 

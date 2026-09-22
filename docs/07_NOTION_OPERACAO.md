@@ -7,7 +7,7 @@ Este documento define como o Radar de Editais — Dhara / IFA Records usa o Noti
 | Camada | Papel |
 |---|---|
 | Repositório (GitHub) | Fonte de verdade das regras, agentes, critérios, fontes, templates e configurações. |
-| Notion | Sistema de registro operacional: pipeline de oportunidades, relatórios diários e semanais, histórico de alterações. |
+| Notion | Sistema de registro operacional: pipeline de oportunidades, relatórios semanais e alertas, histórico de alterações. |
 | Sessão principal do Claude Code | Orquestradora e **única** responsável por ler e gravar no Notion. |
 | Subagentes | Nunca acessam o Notion. O `edital-reporter` pode apenas preparar payloads. |
 
@@ -146,9 +146,9 @@ Uma página por relatório. Páginas não são editadas depois de criadas.
 
 | Propriedade | Tipo | Valores permitidos | Quem altera |
 |---|---|---|---|
-| Relatório | Title | "Diário AAAA-MM-DD" ou "Semanal AAAA-Www", com sufixo "r2", "r3" se necessário | Radar, na criação |
-| Chave do relatório | Text | `diario:AAAA-MM-DD` ou `semanal:AAAA-Www`, com `-r2`, `-r3` | Radar, na criação |
-| Tipo | Select | Diário, Semanal | Radar, na criação |
+| Relatório | Title | "Semanal AAAA-Www" ou "Alerta AAAA-MM-DD", com sufixo "r2", "r3" se necessário | Radar, na criação |
+| Chave do relatório | Text | `semanal:AAAA-Www` ou `alerta:AAAA-MM-DD`, com `-r2`, `-r3` | Radar, na criação |
+| Tipo | Select | Diário, Semanal, Alerta | Radar, na criação |
 | Data/hora da rodada | Date (com hora) | — | Radar, na criação |
 | Cobertura | Select | Brasil, Internacional, Brasil e internacional | Radar, na criação |
 | Modo de execução | Select | Subagentes formais, Modo agente único | Radar, na criação |
@@ -167,7 +167,7 @@ Uma página por relatório. Páginas não são editadas depois de criadas.
 
 ### Corpo da página
 
-Na ordem: tipo; data/hora da rodada; cobertura; fontes consultadas; números de candidatas, validadas, descartadas, urgentes e em revisão; oportunidades urgentes; novas oportunidades prioritárias; mudanças de prazo, regulamento, status, valor ou elegibilidade; propostas de novas URLs para `config/sources.yaml` (não validadas, sem edição automática do arquivo); limitações da rodada, incluindo falhas de sincronização; próximas ações; decisões humanas necessárias.
+O corpo da página de relatório segue o modelo `templates/weekly-report.md`. A página de Tipo "Alerta" (cadência de segunda-feira) traz apenas os itens `URGENTE` e os alertas críticos de prazo vencido em candidatura em preparação da rodada.
 
 ## Relação entre as databases
 
@@ -468,6 +468,12 @@ Antes de gravar, a sessão principal consulta a database de pipeline do Notion d
 
 O log `data/reports/AAAA-MM-DD-sync-notion.md` identifica a execução como agendada e registra o alvo (teste ou produção), as operações factuais gravadas, as propostas estratégicas preenchidas, as propostas atendidas e limpas, o excedente não gravado e as falhas.
 
+### Economia de chamadas
+
+- Ler o schema de cada database uma única vez por rodada; não reler o mesmo schema.
+- Não executar `notion-get-tool-access` em rodadas agendadas; usá-lo apenas na primeira conexão operacional ou depois de uma falha.
+- Agrupar as consultas de deduplicação: uma consulta por lote de chaves, em vez de uma por oportunidade, quando a ferramenta permitir.
+
 ### Persistência dos arquivos
 
 Ao final de cada rodada agendada, a sessão principal faz commit e push dos arquivos novos de `data/reports/` na branch `claude/radar-rodadas`, criando-a se não existir, a partir da `main`. Nunca na `main` e nunca alterando arquivos fora de `data/reports/`. A página de relatório no Notion é o registro principal da rodada.
@@ -518,7 +524,7 @@ Executar uma única vez, em uma branch de teste, antes da primeira sincronizaç�
     - Colocar a página de teste em "Em preparação" manualmente e repetir a simulação anterior: os campos factuais (status validado e operacional, prioridade, revisão, última validação e histórico) devem ser atualizados, o funil e a Decisão devem permanecer, e deve sair um alerta crítico com proposta estratégica. Se a edição manual não chegar ao Notion, a sessão pode fazer essa preparação pela API, com aprovação da usuária, registrando no Histórico de alterações que é preparação de teste e não comportamento do radar.
 11. **Testar relatório.** Criar uma página na database de relatórios de teste, com relação para a oportunidade de teste. Tentar criar outra com a mesma chave: deve ser proposta com sufixo `-r2`, sem alterar a primeira.
 12. **Testar falha.** Rodar uma sincronização em modo simulado com um `data_source_id` inválido: a rodada deve terminar, o relatório local deve registrar a falha e nada deve ser gravado.
-13. **Encerrar os testes.** O radar não apaga páginas. As databases [TESTE] ficam ativas enquanto `modo_agendado.alvo` for `teste` (modo sombra). Arquivá-las ou apagá-las é uma ação manual da pessoa usuária, e só depois da troca para `producao`.
+13. **Encerrar os testes.** O radar não apaga páginas. A troca de `modo_agendado.alvo` de `teste` para `producao` ocorreu em 2026-09-22. A partir daí, o arquivamento ou a exclusão das databases [TESTE] é uma ação manual e opcional da pessoa usuária; o radar não depende mais delas.
 14. **Primeira sincronização real.** Lote pequeno (até cinco oportunidades), com revisão item a item.
 
 ## DDL de referência
@@ -529,7 +535,7 @@ Para uso somente na configuração inicial, com aprovação explícita, via `not
 CREATE TABLE (
   "Relatório" TITLE,
   "Chave do relatório" RICH_TEXT,
-  "Tipo" SELECT('Diário':blue, 'Semanal':purple),
+  "Tipo" SELECT('Diário':blue, 'Semanal':purple, 'Alerta':red),
   "Data/hora da rodada" DATE,
   "Cobertura" SELECT('Brasil':green, 'Internacional':blue, 'Brasil e internacional':purple),
   "Modo de execução" SELECT('Subagentes formais':green, 'Modo agente único':orange),

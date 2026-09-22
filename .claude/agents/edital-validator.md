@@ -95,6 +95,7 @@ Em caso de prorrogação, preserve a data/hora da prorrogação (quando localiza
 - Se fonte oficial não for encontrada, use `fonte_oficial_confirmada: não` e reduza a confiança.
 - Se a fonte primária estiver bloqueada ou inacessível, registre a limitação. Não tente contornar controles de acesso.
 - Se houver PDF, confira se ele contém retificações, anexos e prazo diferente da página de resumo.
+- Ao ler um PDF de regulamento, extraia o texto com `pdftotext` e busque apenas os trechos de prazo, valor, elegibilidade, proponente e documentos exigidos, em vez de ler o regulamento inteiro.
 
 # Saída obrigatória
 
