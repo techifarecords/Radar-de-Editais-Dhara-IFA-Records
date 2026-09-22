@@ -524,7 +524,7 @@ Executar uma única vez, em uma branch de teste, antes da primeira sincronizaç�
     - Colocar a página de teste em "Em preparação" manualmente e repetir a simulação anterior: os campos factuais (status validado e operacional, prioridade, revisão, última validação e histórico) devem ser atualizados, o funil e a Decisão devem permanecer, e deve sair um alerta crítico com proposta estratégica. Se a edição manual não chegar ao Notion, a sessão pode fazer essa preparação pela API, com aprovação da usuária, registrando no Histórico de alterações que é preparação de teste e não comportamento do radar.
 11. **Testar relatório.** Criar uma página na database de relatórios de teste, com relação para a oportunidade de teste. Tentar criar outra com a mesma chave: deve ser proposta com sufixo `-r2`, sem alterar a primeira.
 12. **Testar falha.** Rodar uma sincronização em modo simulado com um `data_source_id` inválido: a rodada deve terminar, o relatório local deve registrar a falha e nada deve ser gravado.
-13. **Encerrar os testes.** O radar não apaga páginas. As databases [TESTE] ficam ativas enquanto `modo_agendado.alvo` for `teste` (modo sombra). Arquivá-las ou apagá-las é uma ação manual da pessoa usuária, e só depois da troca para `producao`.
+13. **Encerrar os testes.** O radar não apaga páginas. A troca de `modo_agendado.alvo` de `teste` para `producao` ocorreu em 2026-09-22. A partir daí, o arquivamento ou a exclusão das databases [TESTE] é uma ação manual e opcional da pessoa usuária; o radar não depende mais delas.
 14. **Primeira sincronização real.** Lote pequeno (até cinco oportunidades), com revisão item a item.
 
 ## DDL de referência
