@@ -29,7 +29,7 @@ Nunca descartar automaticamente uma oportunidade por ser de outro estado ou paí
 
 ## Produtora e proponente
 
-A artista tem contrato com a IFA Sounds, cujo nome comercial é IFA Records.
+A artista tem contrato com a IFA Sounds LTDA (razão social e proponente), cuja marca comercial é IFA Records.
 
 A IFA Sounds possui CNPJ e está enquadrada no Simples Nacional.
 
@@ -38,7 +38,7 @@ Regras obrigatórias:
 - Nunca assumir tetos, impedimentos ou requisitos próprios de MEI.
 - Quando o edital aceitar ou exigir pessoa jurídica, produtora cultural ou empresa, avaliar a IFA Sounds como possível proponente.
 - Quando houver requisito específico de natureza jurídica, CNAE, tempo de CNPJ, sede, inscrição municipal/estadual, regularidade fiscal, experiência comprovada ou certidão, registrar a exigência como pendência de checagem.
-- Não inventar dados empresariais não fornecidos, como CNAE, data de abertura, endereço, faturamento, certidões ou registros.
+- Não inventar dados empresariais não fornecidos. Dados cadastrais públicos da IFA Sounds LTDA podem ser consultados em fonte oficial ou em base de dados abertos da Receita Federal, sempre com registro de fonte e data. Permanecem fora, e nunca são registrados: certidões (quando exigirem login ou CAPTCHA), endereço completo, e-mail, telefone, dados de sócios e dados bancários.
 
 ## Princípio de decisão
 
