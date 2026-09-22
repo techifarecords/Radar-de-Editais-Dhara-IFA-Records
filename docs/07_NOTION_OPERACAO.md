@@ -468,6 +468,12 @@ Antes de gravar, a sessão principal consulta a database de pipeline do Notion d
 
 O log `data/reports/AAAA-MM-DD-sync-notion.md` identifica a execução como agendada e registra o alvo (teste ou produção), as operações factuais gravadas, as propostas estratégicas preenchidas, as propostas atendidas e limpas, o excedente não gravado e as falhas.
 
+### Economia de chamadas
+
+- Ler o schema de cada database uma única vez por rodada; não reler o mesmo schema.
+- Não executar `notion-get-tool-access` em rodadas agendadas; usá-lo apenas na primeira conexão operacional ou depois de uma falha.
+- Agrupar as consultas de deduplicação: uma consulta por lote de chaves, em vez de uma por oportunidade, quando a ferramenta permitir.
+
 ### Persistência dos arquivos
 
 Ao final de cada rodada agendada, a sessão principal faz commit e push dos arquivos novos de `data/reports/` na branch `claude/radar-rodadas`, criando-a se não existir, a partir da `main`. Nunca na `main` e nunca alterando arquivos fora de `data/reports/`. A página de relatório no Notion é o registro principal da rodada.

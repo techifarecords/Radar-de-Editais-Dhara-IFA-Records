@@ -96,6 +96,34 @@ Na Preparação, a sessão principal também verifica, sem gravar nada, se o Not
 
    Em execução agendada (rotina na nuvem, sem pessoa usuária presente), vale a seção "Modo agendado" de `docs/07_NOTION_OPERACAO.md`, no lugar da apresentação prévia e da aprovação por escrita descritas acima.
 
+## Modo econômico (rodada agendada)
+
+Ajustes para reduzir o consumo em rodadas agendadas, sem perder qualidade. Valem quando a rodada é executada por rotina agendada; onde indicado, também melhoram rodadas interativas.
+
+### Execução dos subagentes
+
+- Os subagentes rodam em primeiro plano, um de cada vez. É proibido lançá-los em segundo plano e ficar consultando se terminaram: a sessão principal aguarda o retorno de cada subagente antes de chamar o próximo.
+
+### Leitura mínima na preparação
+
+- Na preparação de uma rodada agendada, a sessão principal lê apenas `docs/06_ORQUESTRACAO_DA_RODADA.md`, a seção "Modo agendado" de `docs/07_NOTION_OPERACAO.md` e `config/notion.yaml`. Os demais arquivos da lista de "Pré-condições" só são lidos quando uma etapa deles precisar.
+
+### Triagem antes da validação
+
+- Etapa nova, entre a descoberta (etapa 1) e a validação (etapa 2). A sessão principal lê o campo `triagem_sugerida` de cada candidata (ver `.claude/agents/opportunity-discovery.md`). As candidatas marcadas pela descoberta, com evidência, como claramente não abertas ou claramente inelegíveis vão direto para `MONITORAR` ou `DESCARTAR`, sem validação completa. Só as candidatas com `triagem_sugerida = validar` seguem para o `edital-validator`.
+
+### Deduplicação antes da validação
+
+- Antes de validar, a sessão principal consulta o pipeline do Notion pela chave de deduplicação das candidatas que passaram na triagem. Se a oportunidade já existe, foi validada há menos de 7 dias e não tem prazo final nos próximos 10 dias, não é revalidada nesta rodada: registrar como "mantida sem revalidação". As demais seguem para a validação.
+
+### Formato de entrega entre agentes
+
+- A entrega entre agentes é compacta: só os campos do contrato de saída de cada agente, sem prosa e sem repetir instruções. Evidências literais têm no máximo 25 palavras.
+
+### Encerramento
+
+- Ao final da rodada, encerrar. Não assinar, observar nem comentar pull requests.
+
 ## Fontes sem URL configurada
 
 - Usar primeiro as fontes com URL configurada em `config/sources.yaml`.

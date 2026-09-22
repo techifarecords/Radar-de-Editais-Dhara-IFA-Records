@@ -2,7 +2,7 @@
 name: edital-reporter
 description: Converte oportunidades validadas e pontuadas em alertas e relatórios diários ou semanais acionáveis para Dhara e IFA Records, grava-os localmente em data/reports/ e prepara payloads para o Notion sem acessá-lo. Use após a validação e o score; não pesquisa nem altera sistemas externos.
 tools: Read, Glob, Grep, Write
-model: sonnet
+model: haiku
 permissionMode: default
 maxTurns: 20
 ---
@@ -72,7 +72,8 @@ Quando a sessão principal informar que a sincronização está habilitada, prep
 - Classifique cada operação com `tipo_alteracao` conforme `config/notion.yaml` (`politica_atualizacao`): `factual` ou `estrategica`. Mudanças de Decisão para `APLICAR`, `AVALIAR_COM_PARCERIA` ou `DESCARTAR`, e de Status do funil para `APLICAR`, `AVALIAR_COM_PARCERIA`, `DESCARTADO`, `EM_PREPARACAO` ou `PRONTO_PARA_INSCRICAO`, são sempre `estrategica`.
 - Em operações estratégicas, inclua `motivo`, `evidencia`, `url_evidencia`, `data_hora_evidencia` e `impacto_operacional`. A sessão principal confirma a classificação com os valores vigentes no Notion.
 - Para cada mudança de campo já existente, inclua uma entrada de `historico` com data/hora, campo, valor anterior, valor novo, URL e trecho da fonte.
-- Inclua um item para a página do relatório (database `relatorios`), com as propriedades e o corpo previstos em `docs/07`.
+- Inclua um item para a página do relatório (database `relatorios`), com as propriedades previstas em `docs/07`; o corpo é montado pela sessão principal a partir do relatório.
+- O payload contém apenas `propriedades` e `historico`. O corpo da página é montado pela sessão principal a partir do relatório; não inclua `corpo` no payload nem duplique nele o conteúdo do relatório.
 - Valores não localizados ficam `null`; não invente.
 
 Formato de cada item:
@@ -85,7 +86,6 @@ Formato de cada item:
   "chave_deduplicacao": "",
   "propriedades": {},
   "historico": [],
-  "corpo": "",
   "motivo": null,
   "evidencia": null,
   "url_evidencia": null,
@@ -143,6 +143,8 @@ Quando uma oportunidade com Status do funil `EM_PREPARACAO` ou `PRONTO_PARA_INSC
 Os valores internos (sem acento) ficam nos dados; no texto e nas tabelas, exiba os rótulos legíveis de `docs/04_PIPELINE_E_STATUS.md`, por exemplo "Em validação", "Aguardando revisão humana", "Avaliar com parceria", "Em preparação", "Pronto para inscrição" e "Não aprovado". Uma chamada prorrogada tratada como aberta aparece como "Prorrogada — aberta até {{novo prazo}}".
 
 # Relatório diário
+
+Em rodada agendada, o relatório local é um resumo de até 150 linhas; o registro completo da rodada é a página no Notion.
 
 Escreva em português do Brasil, siga `templates/daily-report.md` e use esta ordem:
 
