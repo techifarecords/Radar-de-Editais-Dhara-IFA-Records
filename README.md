@@ -336,7 +336,7 @@ Modelo: `templates/weekly-report.md`. Deve incluir:
 
 | Frequência | Atividade |
 |---|---|
-| Diária, em dias úteis | Rodada de descoberta, validação, score e alertas. |
+| Segunda e quinta, às 4h (rotina agendada) | Rodada de descoberta, validação, score e sincronização com o Notion; relatório semanal às quintas e página de Alerta às segundas, se houver urgência. |
 | Semanal | Revisão de pipeline, prazos, parcerias e decisões de candidatura. |
 | Mensal | Atualização das fontes, pesos do score e kit documental. |
 | A cada edital prioritário | Criar uma pasta/dossiê de candidatura, checklist e versão adaptada do projeto. |
