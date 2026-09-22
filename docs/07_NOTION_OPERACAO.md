@@ -7,7 +7,7 @@ Este documento define como o Radar de Editais — Dhara / IFA Records usa o Noti
 | Camada | Papel |
 |---|---|
 | Repositório (GitHub) | Fonte de verdade das regras, agentes, critérios, fontes, templates e configurações. |
-| Notion | Sistema de registro operacional: pipeline de oportunidades, relatórios diários e semanais, histórico de alterações. |
+| Notion | Sistema de registro operacional: pipeline de oportunidades, relatórios semanais e alertas, histórico de alterações. |
 | Sessão principal do Claude Code | Orquestradora e **única** responsável por ler e gravar no Notion. |
 | Subagentes | Nunca acessam o Notion. O `edital-reporter` pode apenas preparar payloads. |
 
@@ -146,9 +146,9 @@ Uma página por relatório. Páginas não são editadas depois de criadas.
 
 | Propriedade | Tipo | Valores permitidos | Quem altera |
 |---|---|---|---|
-| Relatório | Title | "Diário AAAA-MM-DD" ou "Semanal AAAA-Www", com sufixo "r2", "r3" se necessário | Radar, na criação |
-| Chave do relatório | Text | `diario:AAAA-MM-DD` ou `semanal:AAAA-Www`, com `-r2`, `-r3` | Radar, na criação |
-| Tipo | Select | Diário, Semanal | Radar, na criação |
+| Relatório | Title | "Semanal AAAA-Www" ou "Alerta AAAA-MM-DD", com sufixo "r2", "r3" se necessário | Radar, na criação |
+| Chave do relatório | Text | `semanal:AAAA-Www` ou `alerta:AAAA-MM-DD`, com `-r2`, `-r3` | Radar, na criação |
+| Tipo | Select | Diário, Semanal, Alerta | Radar, na criação |
 | Data/hora da rodada | Date (com hora) | — | Radar, na criação |
 | Cobertura | Select | Brasil, Internacional, Brasil e internacional | Radar, na criação |
 | Modo de execução | Select | Subagentes formais, Modo agente único | Radar, na criação |
@@ -167,7 +167,7 @@ Uma página por relatório. Páginas não são editadas depois de criadas.
 
 ### Corpo da página
 
-Na ordem: tipo; data/hora da rodada; cobertura; fontes consultadas; números de candidatas, validadas, descartadas, urgentes e em revisão; oportunidades urgentes; novas oportunidades prioritárias; mudanças de prazo, regulamento, status, valor ou elegibilidade; propostas de novas URLs para `config/sources.yaml` (não validadas, sem edição automática do arquivo); limitações da rodada, incluindo falhas de sincronização; próximas ações; decisões humanas necessárias.
+O corpo da página de relatório segue o modelo `templates/weekly-report.md`. A página de Tipo "Alerta" (cadência de segunda-feira) traz apenas os itens `URGENTE` e os alertas críticos de prazo vencido em candidatura em preparação da rodada.
 
 ## Relação entre as databases
 
@@ -535,7 +535,7 @@ Para uso somente na configuração inicial, com aprovação explícita, via `not
 CREATE TABLE (
   "Relatório" TITLE,
   "Chave do relatório" RICH_TEXT,
-  "Tipo" SELECT('Diário':blue, 'Semanal':purple),
+  "Tipo" SELECT('Diário':blue, 'Semanal':purple, 'Alerta':red),
   "Data/hora da rodada" DATE,
   "Cobertura" SELECT('Brasil':green, 'Internacional':blue, 'Brasil e internacional':purple),
   "Modo de execução" SELECT('Subagentes formais':green, 'Modo agente único':orange),

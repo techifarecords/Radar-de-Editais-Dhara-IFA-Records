@@ -80,7 +80,7 @@ Na Preparação, a sessão principal também verifica, sem gravar nada, se o Not
    - A lista de itens novos, atualizados e encerrados da etapa 3.
    - O resultado da verificação de acesso ao Notion feita na Preparação.
 
-   O reporter grava o relatório local e, se a sincronização estiver habilitada, prepara os payloads em `data/reports/AAAA-MM-DD-notion-payload.json`.
+   O reporter grava o relatório local conforme a cadência de `docs/04_PIPELINE_E_STATUS.md` (segunda: só o log de sincronização; quinta: relatório semanal) e, se a sincronização estiver habilitada, prepara os payloads em `data/reports/AAAA-MM-DD-notion-payload.json`.
 6. **Consolidação — sessão principal.** Consolidar as saídas sem alterar dados, score, evidências ou conclusões dos subagentes.
 7. **Sincronização com o Notion — sessão principal.** Somente se `config/notion.yaml` tiver `sincronizacao.habilitada: true`, IDs resolvidos e `schema_verificado: true`. Seguir `docs/07_NOTION_OPERACAO.md`:
    - ler o schema das duas databases com `notion-fetch` e comparar com `docs/07`;

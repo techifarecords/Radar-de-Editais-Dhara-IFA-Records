@@ -164,7 +164,7 @@ Preparação — sessão principal: ler este arquivo, `docs/`, `config/` e o rel
 2. `edital-validator`: validar status, fonte oficial, prazo e regras; atribuir `status_validado` e `status_operacional`.
 3. Sessão principal: normalizar e deduplicar os registros.
 4. `dhara-fit-scorer`: analisar elegibilidade, riscos, score e decisão.
-5. `edital-reporter`: produzir alertas e relatório diário, gravado em `data/reports/`, e preparar payloads do Notion.
+5. `edital-reporter`: produzir alertas e relatório semanal, gravado em `data/reports/`, e preparar payloads do Notion.
 6. Sessão principal: consolidar.
 7. Sessão principal: sincronizar com o Notion conforme `docs/07_NOTION_OPERACAO.md`, somente com IDs resolvidos, schema verificado e aprovação humana. Se o Notion estiver inacessível, a rodada termina normalmente e a falha fica registrada.
 
@@ -243,7 +243,6 @@ docs/08_DADOS_DHARA_IFA.md
 config/sources.yaml
 config/scoring.yaml
 config/notion.yaml
-templates/daily-report.md
 templates/weekly-report.md
 templates/opportunity-record.md
 ```
