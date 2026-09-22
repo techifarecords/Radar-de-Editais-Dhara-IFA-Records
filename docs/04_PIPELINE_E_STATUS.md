@@ -136,6 +136,7 @@ Aplicar quando houver pelo menos um dos itens:
 
 ## Cadência
 
-- Rodada diária: descoberta, validação e alertas.
-- Revisão semanal: priorização, decisões e atualização do funil.
+- Segunda-feira: sincronizar o pipeline no Notion e gravar o log `data/reports/AAAA-MM-DD-sync-notion.md`. Sem relatório. Exceção: havendo `URGENTE` ou alerta crítico (prazo vencido em candidatura em preparação), criar no Notion uma página curta de Tipo "Alerta", só com esses itens, chave `alerta:AAAA-MM-DD`.
+- Quinta-feira: sincronizar o pipeline e criar o relatório semanal, cobrindo as rodadas de segunda e quinta da semana. Chave `semanal:AAAA-Www`.
+- Rodada manual fora desse calendário: seguir a regra de segunda-feira.
 - Revisão mensal: atualização do kit documental e análise de fontes que geram oportunidades relevantes.

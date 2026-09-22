@@ -42,7 +42,7 @@ sincronizacao:
 
 modo_agendado:
   habilitado: true
-  alvo: teste          # teste | producao
+  alvo: producao       # teste | producao
   limite_criacoes_por_rodada: 10
   limite_atualizacoes_por_rodada: 20
 

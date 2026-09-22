@@ -3,13 +3,13 @@
 <!--
 Modelo usado pelo edital-reporter.
 Gravar em: data/reports/AAAA-Www-semanal.md (semana ISO; sufixo -r2, -r3 se já existir).
-Inclui o consolidado dos relatórios diários da semana.
+Inclui o consolidado das rodadas da semana (segunda e quinta).
 Não inventar dados: usar "não localizado" ou "não informado".
 Exibir rótulos legíveis (ex.: "Avaliar com parceria", "Pronto para inscrição"), não os valores internos.
 -->
 
 - **Semana:** {{AAAA-Www}} ({{AAAA-MM-DD}} a {{AAAA-MM-DD}})
-- **Relatórios diários consolidados:** {{lista de arquivos em data/reports/}}
+- **Rodadas consolidadas:** {{lista de arquivos em data/reports/}}
 - **Modo de execução predominante:** {{subagentes_formais | modo_agente_unico}}
 
 ## 1. Resumo da semana
@@ -83,7 +83,7 @@ Baseado em `docs/05_KIT_DOCUMENTAL.md`. Registrar apenas disponibilidade, nunca 
 
 ## 9. Propostas de atualização de fontes acumuladas
 
-Consolidado das propostas dos relatórios diários. **Não validadas**; `config/sources.yaml` só muda com aprovação humana.
+Consolidado das propostas das rodadas da semana. **Não validadas**; `config/sources.yaml` só muda com aprovação humana.
 
 | Fonte (`id`) | URL sugerida | Evidência | Vezes sugerida na semana | Situação |
 |---|---|---|---:|---|

@@ -106,7 +106,6 @@ radar-editais-dhara/
 │   ├── scoring.yaml
 │   └── notion.yaml
 └── templates/
-    ├── daily-report.md
     ├── weekly-report.md
     └── opportunity-record.md
 ```
@@ -134,7 +133,7 @@ A sessão principal do Claude Code é a orquestradora. Ela não é um subagente:
 | Descoberta | `.claude/agents/opportunity-discovery.md` | Localiza editais e oportunidades candidatas no Brasil e exterior. |
 | Validação | `.claude/agents/edital-validator.md` | Confere fonte oficial, regulamento, status, prazo, valor, exigências e evidências. |
 | Elegibilidade e score | `.claude/agents/dhara-fit-scorer.md` | Avalia aderência à Dhara/IFA, riscos, pendências e recomendação. |
-| Relatórios e alertas | `.claude/agents/edital-reporter.md` | Produz alertas, relatório diário e revisão semanal e prepara payloads do Notion; pode gravar somente em `data/reports/` e não acessa o Notion. |
+| Relatórios e alertas | `.claude/agents/edital-reporter.md` | Produz alertas e relatório semanal e prepara payloads do Notion; pode gravar somente em `data/reports/` e não acessa o Notion. |
 
 ### Ordem obrigatória de execução
 
@@ -218,12 +217,12 @@ A lista operacional de fontes é mantida em `config/sources.yaml`. URLs ainda n�
 
 ## Notion como camada operacional
 
-O repositório continua sendo a fonte de verdade das regras. O Notion é o sistema de registro operacional: pipeline de oportunidades, relatórios diários e semanais e histórico de alterações. A especificação completa está em `docs/07_NOTION_OPERACAO.md`.
+O repositório continua sendo a fonte de verdade das regras. O Notion é o sistema de registro operacional: pipeline de oportunidades, relatórios semanais e alertas e histórico de alterações. A especificação completa está em `docs/07_NOTION_OPERACAO.md`.
 
 | Database | Conteúdo |
 |---|---|
 | `Pipeline de Editais — IFA Records` | Uma página por oportunidade com decisão `APLICAR`, `AVALIAR_COM_PARCERIA` ou `MONITORAR`. Propriedades guardam o valor atual; o corpo da página guarda evidências e histórico de alterações. |
-| `Relatórios do Radar — IFA Records` | Uma página nova por relatório diário ou semanal, relacionada às oportunidades da rodada. |
+| `Relatórios do Radar — IFA Records` | Uma página nova por relatório semanal ou alerta, relacionada às oportunidades da rodada. |
 
 Regras principais:
 
@@ -285,7 +284,7 @@ Restrições:
 - Não realizar inscrições, envios, contatos, uploads, pagamentos ou ações externas.
 - Não inventar dados ausentes.
 
-Entregue relatório diário em português do Brasil, com oportunidades urgentes, prioritárias, pendências e recomendações de próxima ação. O edital-reporter pode gravá-lo em data/reports/.
+Entregue relatório semanal em português do Brasil, com oportunidades urgentes, prioritárias, pendências e recomendações de próxima ação. O edital-reporter pode gravá-lo em data/reports/.
 ```
 
 ## Relatórios e alertas
@@ -312,17 +311,6 @@ Marcar `ALTA_PRIORIDADE` quando:
 
 Marcar `REVISAO` quando houver dado crítico ausente, divergência de fonte, dúvida de elegibilidade, exigência de parceiro/anfitrião, visto, idioma ou cofinanciamento, ou prazo/fuso ambíguo.
 
-### Relatório diário
-
-Modelo: `templates/daily-report.md`. Deve incluir:
-
-- Urgentes.
-- Novas oportunidades prioritárias.
-- Alterações em prazo, status ou regulamento.
-- Casos que exigem revisão humana.
-- Fontes consultadas, falhas e limitações.
-- Próximas ações recomendadas.
-
 ### Relatório semanal
 
 Modelo: `templates/weekly-report.md`. Deve incluir:
@@ -348,7 +336,7 @@ Modelo: `templates/weekly-report.md`. Deve incluir:
 
 | Frequência | Atividade |
 |---|---|
-| Diária, em dias úteis | Rodada de descoberta, validação, score e alertas. |
+| Segunda e quinta, às 4h (rotina agendada) | Rodada de descoberta, validação, score e sincronização com o Notion; relatório semanal às quintas e página de Alerta às segundas, se houver urgência. |
 | Semanal | Revisão de pipeline, prazos, parcerias e decisões de candidatura. |
 | Mensal | Atualização das fontes, pesos do score e kit documental. |
 | A cada edital prioritário | Criar uma pasta/dossiê de candidatura, checklist e versão adaptada do projeto. |

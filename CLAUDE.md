@@ -164,7 +164,7 @@ Preparação — sessão principal: ler este arquivo, `docs/`, `config/` e o rel
 2. `edital-validator`: validar status, fonte oficial, prazo e regras; atribuir `status_validado` e `status_operacional`.
 3. Sessão principal: normalizar e deduplicar os registros.
 4. `dhara-fit-scorer`: analisar elegibilidade, riscos, score e decisão.
-5. `edital-reporter`: produzir alertas e relatório diário, gravado em `data/reports/`, e preparar payloads do Notion.
+5. `edital-reporter`: produzir alertas e relatório semanal, gravado em `data/reports/`, e preparar payloads do Notion.
 6. Sessão principal: consolidar.
 7. Sessão principal: sincronizar com o Notion conforme `docs/07_NOTION_OPERACAO.md`, somente com IDs resolvidos, schema verificado e aprovação humana. Se o Notion estiver inacessível, a rodada termina normalmente e a falha fica registrada.
 
@@ -226,6 +226,7 @@ O Notion é o sistema de registro operacional do radar: pipeline de oportunidade
 - Fazer mudanças pequenas, reversíveis e bem delimitadas.
 - Antes de editar múltiplos arquivos ou executar tarefa extensa, apresentar plano breve com arquivos envolvidos e critério de sucesso.
 - Após qualquer alteração, validar links internos, formatação e coerência com este arquivo.
+- Nunca fazer commit direto na main. Toda mudança entra por branch e pull request, com merge feito pela usuária. Exceção única: os commits de data/reports/ na branch claude/radar-rodadas, em modo agendado.
 
 ## Arquivos de referência obrigatória
 
@@ -243,7 +244,6 @@ docs/08_DADOS_DHARA_IFA.md
 config/sources.yaml
 config/scoring.yaml
 config/notion.yaml
-templates/daily-report.md
 templates/weekly-report.md
 templates/opportunity-record.md
 ```
