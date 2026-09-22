@@ -14,7 +14,7 @@ O repositório é a fonte de verdade das regras, agentes, critérios, fontes, te
 
 ### Dhara
 
-- Cantora, compositora e produtora musical independente brasileira.
+- Cantora e compositora independente brasileira.
 - Projeto prioritário: álbum autoral “Nada disso é só meu”.
 - A linguagem combina uma face acústica/intimista com uma face orientada por beats.
 - Temas: relações, memória, cidade, intimidade, narrativa coletiva e cultura brasileira contemporânea.
