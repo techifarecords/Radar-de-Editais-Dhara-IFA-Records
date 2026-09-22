@@ -1,6 +1,6 @@
 # Radar de Editais — Dhara / IFA Records
 
-Sistema orientado por agentes Claude para descobrir, validar, priorizar e acompanhar editais, chamadas públicas, festivais, residências e oportunidades culturais para Dhara Guimarães, artista do casting da IFA Sounds, cujo nome comercial é IFA Records.
+Sistema orientado por agentes Claude para descobrir, validar, priorizar e acompanhar editais, chamadas públicas, festivais, residências e oportunidades culturais para Dhara Guimarães, artista do casting da IFA Sounds LTDA, marca IFA Records.
 
 O repositório é a fonte de verdade das regras do radar: perfil artístico, critérios de elegibilidade, fontes monitoradas, pipeline operacional, instruções dos subagentes e decisões técnicas. A sessão principal do Claude Code lê essas instruções, orquestra a rodada e delega as etapas a quatro subagentes especializados. O Notion é a camada operacional de registro: pipeline de oportunidades, relatórios e histórico, sincronizados somente pela sessão principal e com aprovação humana.
 
@@ -30,7 +30,7 @@ Relatório, alertas e pipeline de inscrição
 
 ### Artista
 
-Dhara Guimarães é cantora, compositora e produtora musical independente brasileira. O projeto prioritário é o álbum autoral “Nada disso é só meu”, que articula uma face acústica e intimista com uma face orientada por beats. A obra aborda relações, memória, cidade, intimidade, vivências individuais transformadas em narrativa coletiva e cultura brasileira contemporânea.
+Dhara Guimarães é cantora e compositora independente brasileira. O projeto prioritário é o álbum autoral “Nada disso é só meu”, que articula uma face acústica e intimista com uma face orientada por beats. A obra aborda relações, memória, cidade, intimidade, vivências individuais transformadas em narrativa coletiva e cultura brasileira contemporânea.
 
 Possíveis entregas financiáveis ou programáveis incluem:
 
@@ -44,10 +44,10 @@ Possíveis entregas financiáveis ou programáveis incluem:
 
 ### Produtora e proponente
 
-- Razão/identificação operacional: IFA Sounds.
+- Razão/identificação operacional: IFA Sounds LTDA.
 - Nome comercial: IFA Records.
 - Natureza conhecida: pessoa jurídica brasileira com CNPJ, enquadrada no Simples Nacional.
-- Relação com a artista: Dhara possui contrato com a IFA Sounds.
+- Relação com a artista: Dhara possui contrato de agenciamento 360 com a IFA Sounds LTDA.
 
 Regras fundamentais:
 
