@@ -509,6 +509,10 @@ Na rodada de segunda-feira não se cria página de relatório no Notion; o regis
 
 Ao final de cada rodada agendada, a sessão principal faz commit e push dos arquivos novos de `data/reports/` na branch `claude/radar-rodadas`, criando-a se não existir, a partir da `main`. Nunca na `main` e nunca alterando arquivos fora de `data/reports/`. A página de relatório no Notion é o registro principal da rodada.
 
+### Notificação por e-mail
+
+Um cenário no Make, de propriedade da usuária, observa a database Relatórios do Radar — IFA Records e envia e-mail para a equipe quando uma página nova é criada. É uma automação externa: o radar não envia mensagens e não depende dela. Se o cenário falhar, a rodada não é afetada.
+
 ## Payloads preparados pelo `edital-reporter`
 
 O `edital-reporter` pode preparar payloads, mas não grava no Notion:

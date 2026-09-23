@@ -127,7 +127,7 @@ ultima_validacao: null     # AAAA-MM-DD HH:MM (fuso)
 
 ## Histórico de alterações
 
-Preservar mudanças de prazo, status, regulamento e valor. Não sobrescrever evidências anteriores. No Notion, cada linha nova é acrescentada ao fim da seção "Histórico de alterações" da página, nunca editada.
+Preservar mudanças de prazo, status, regulamento e valor. Não sobrescrever evidências anteriores. No Notion, cada entrada nova é acrescentada ao fim da seção "Histórico de alterações" da página, nunca editada.
 
 - {{AAAA-MM-DD HH:MM}} ({{fuso}}) — {{evento}}. Fonte: {{url}}. Trecho: "{{trecho}}".
 	- {{campo}}: {{antes}} → {{depois}}
