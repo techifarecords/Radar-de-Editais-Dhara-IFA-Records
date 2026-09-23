@@ -23,7 +23,7 @@ Manter atualizados:
 
 Não armazenar documentos sensíveis no agente. Usar somente um checklist de disponibilidade:
 
-- Cartão CNPJ.
+- Cartão CNPJ (dados cadastrais já registrados em `docs/08_DADOS_DHARA_IFA.md`; o documento em si é fornecido pela usuária na inscrição).
 - Contrato social e alterações aplicáveis.
 - Comprovante de sede/endereço.
 - Dados cadastrais atualizados.
