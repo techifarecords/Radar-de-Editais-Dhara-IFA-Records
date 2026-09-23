@@ -111,6 +111,7 @@ Ajustes para reduzir o consumo em rodadas agendadas, sem perder qualidade. Valem
 ### Triagem antes da validação
 
 - Etapa nova, entre a descoberta (etapa 1) e a validação (etapa 2). A sessão principal lê o campo `triagem_sugerida` de cada candidata (ver `.claude/agents/opportunity-discovery.md`). As candidatas marcadas pela descoberta, com evidência, como claramente não abertas ou claramente inelegíveis vão direto para `MONITORAR` ou `DESCARTAR`, sem validação completa. Só as candidatas com `triagem_sugerida = validar` seguem para o `edital-validator`.
+- O rebaixamento para `MONITORAR` ou `DESCARTAR` na triagem decorre apenas de evidência (chamada claramente não aberta ou claramente inelegível), nunca de falta de espaço na rodada — não há teto de gravação (ver `docs/07`, "Limites por rodada").
 
 ### Deduplicação antes da validação
 
@@ -123,6 +124,10 @@ Ajustes para reduzir o consumo em rodadas agendadas, sem perder qualidade. Valem
 ### Encerramento
 
 - Ao final da rodada, encerrar. Não assinar, observar nem comentar pull requests.
+
+### Cadência da rodada
+
+Conforme `docs/04_PIPELINE_E_STATUS.md`: na segunda-feira, a sessão principal sincroniza o pipeline e grava apenas o log local `data/reports/AAAA-MM-DD-sync-notion.md` — não cria página de relatório no Notion. Na segunda, só há página no Notion se houver `URGENTE` ou alerta crítico: página de Tipo "Alerta", chave `alerta:AAAA-MM-DD`. Na quinta-feira, cria o relatório semanal. Não existe chave `log:` nem página de log no Notion.
 
 ## Fontes sem URL configurada
 

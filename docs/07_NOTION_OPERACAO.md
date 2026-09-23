@@ -175,6 +175,17 @@ O corpo da página de relatório segue o modelo `templates/weekly-report.md`. A 
 - Ao criar um relatório, a relação aponta para as oportunidades criadas ou atualizadas na rodada.
 - A relação só recebe acréscimos; o radar nunca remove vínculos.
 
+## Formato de escrita no Notion
+
+Regras de formato aprendidas na primeira conexão operacional. Seguir sem tentativa e erro:
+
+- **Checkbox:** `"__YES__"` ou `"__NO__"`, nunca `true`/`false` nem `1`/`0`.
+- **Select e multi-select:** usar os rótulos legíveis exatamente como no schema ("Avaliar com parceria", "Não localizado"), nunca os valores internos (`AVALIAR_COM_PARCERIA`).
+- **Datas:** `"date:<Campo>:start"` com data ISO e `"date:<Campo>:is_datetime": 1` quando houver hora.
+- **Números:** valor puro, sem aspas; Confiança entre 0 e 1.
+- **Relação:** pelo URL da página relacionada.
+- Antes da primeira escrita da rodada, ler o schema uma vez e conferir os rótulos exatos de cada select e multi-select.
+
 ## Política de escrita
 
 ### Pré-condições
@@ -293,6 +304,22 @@ O radar nunca grava, nem propõe gravar em payload:
 - dados bancários, dados fiscais, documentos, declarações, contratos e anexos sensíveis, em qualquer propriedade ou no corpo da página.
 
 O radar também não usa `notion-create-file-upload` nem anexa arquivos a páginas.
+
+### Campos obrigatórios na criação
+
+Nenhuma página de oportunidade é criada sem: Oportunidade, Chave de deduplicação, Instituição, Link oficial, Status validado, Status operacional, Score, Confiança e Decisão ou Decisão proposta. Se faltar algum desses, a página não é criada e a falta é registrada no log de sincronização.
+
+Preenchimento dos demais campos na criação:
+
+- **Cobertura:** "Brasil" quando o país for Brasil; senão "Internacional".
+- **Abrangência:** derivada do território validado (Municipal, Estadual, Nacional ou Internacional).
+- **Linguagem:** do campo de linguagem da validação; no mínimo "Música".
+- **Modalidade, Estado/região, Cidade, Prazo original (texto), Abertura, Data da prorrogação:** do registro validado, quando houver.
+- **PJ aceita** e **Exige parceiro local:** "Sim", "Não" ou "Não localizado", nunca vazios.
+- **Fonte de descoberta, Link de descoberta e Link de inscrição:** vindos da descoberta e da validação.
+- **Pendências:** a lista do `dhara-fit-scorer`.
+- **Decisão:** preenchida nas criações factuais (Monitorar); vazia só nas criações estratégicas, que trazem "Decisão proposta" preenchida e Status do funil "Aguardando revisão humana".
+- **Campos de texto sem dado:** "Não localizado". **Campos de data sem dado:** vazios, com o motivo em Pendências.
 
 ### Campos fixos após a criação
 
@@ -453,9 +480,9 @@ Inalterado. A rotina agendada nunca grava os itens de "Campos exclusivamente hum
 
 ### Limites por rodada
 
-No máximo 10 criações e 20 atualizações de páginas na database de pipeline por rodada (`modo_agendado.limite_criacoes_por_rodada` e `modo_agendado.limite_atualizacoes_por_rodada`). O excedente não é gravado: vai para o relatório local, na seção "Sincronização com o Notion", como operações pendentes, e é reconsiderado na rodada seguinte. A página da database de Relatórios não entra nesses limites.
+Não há teto de criações nem de atualizações de páginas na database de pipeline por rodada (`modo_agendado.sem_limite: true`): todas as operações válidas da rodada são gravadas. Nenhuma candidata é adiada, rebaixada nem descartada por falta de espaço.
 
-Quando houver mais operações que o limite, a ordem de gravação é esta, e o que não couber forma o excedente:
+A ordem abaixo continua valendo como **ordem de execução** das gravações, não como corte:
 
 - **Criações:** por Prazo final crescente; em empate, por Score decrescente; oportunidades sem prazo por último.
 - **Atualizações:** as que mudam Status validado, Status operacional, Status do funil ou prazo antes das demais.
@@ -473,6 +500,10 @@ O log `data/reports/AAAA-MM-DD-sync-notion.md` identifica a execução como agen
 - Ler o schema de cada database uma única vez por rodada; não reler o mesmo schema.
 - Não executar `notion-get-tool-access` em rodadas agendadas; usá-lo apenas na primeira conexão operacional ou depois de uma falha.
 - Agrupar as consultas de deduplicação: uma consulta por lote de chaves, em vez de uma por oportunidade, quando a ferramenta permitir.
+
+### Cadência de segunda-feira
+
+Na rodada de segunda-feira não se cria página de relatório no Notion; o registro é apenas o log local `data/reports/AAAA-MM-DD-sync-notion.md`. Uma página no Notion só é criada se houver `URGENTE` ou alerta crítico (prazo vencido em candidatura em preparação): nesse caso, uma página de Tipo "Alerta", chave `alerta:AAAA-MM-DD`, apenas com esses itens. Não existe chave `log:` nem página de log no Notion.
 
 ### Persistência dos arquivos
 

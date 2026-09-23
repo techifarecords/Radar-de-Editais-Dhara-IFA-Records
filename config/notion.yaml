@@ -43,8 +43,9 @@ sincronizacao:
 modo_agendado:
   habilitado: true
   alvo: producao       # teste | producao
-  limite_criacoes_por_rodada: 10
-  limite_atualizacoes_por_rodada: 20
+  sem_limite: true
+  # limite_criacoes_por_rodada: 10       # descontinuado: sem teto por rodada
+  # limite_atualizacoes_por_rodada: 20   # descontinuado: sem teto por rodada
 
 # Política de atualização por campo. Detalhes e fluxo de confirmação em docs/07.
 # "automatica" = sem prévia estratégica; toda gravação ainda passa pela permissão
