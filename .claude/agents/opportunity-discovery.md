@@ -162,7 +162,7 @@ Retorne uma tabela em português do Brasil. Uma linha por oportunidade candidata
 - `hipotese_de_aderencia`
 - `possivel_restricao_territorial_ou_juridica`
 - `necessita_validacao` (sim/não)
-- `triagem_sugerida` (validar, monitorar ou descartar), com a evidência curta que a justifica (máximo 25 palavras)
+- `triagem_sugerida` (validar, monitorar ou descartar), com a evidência curta que a justifica (máximo 25 palavras). O rebaixamento para monitorar ou descartar reflete só evidência de status ou elegibilidade, nunca falta de espaço na rodada.
 
 Ao final, informe (a sessão principal repassa estas métricas ao `edital-reporter`):
 
